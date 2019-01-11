@@ -6,6 +6,7 @@ import transforms from './features/transforms.js';
 import supports from './features/supports.js';
 import compositing from './features/compositing.js';
 import clipPath from './features/clip-path.js';
+import masking from './features/masking.js';
 import shape from './features/shape.js';
 import objectFit from './features/object-fit.js';
 
@@ -18,6 +19,7 @@ let features = [
   transforms,
   compositing,
   clipPath,
+  masking,
   shape,
   supports,
   objectFit
