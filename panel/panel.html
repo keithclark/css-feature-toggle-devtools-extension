@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+  <div class="container">
+    <div class="container__header">
+      <img src="../icons/icon-48.png" width="40">
+      <span class="u-txt-l">CSS Feature Toggles</span>
+    </div>
+    <div class="container__body">
+      <div class="optionGroupList" id="optionsContainer"></div>
+    </div>
+  </div>
+
+  <template id="option">
+    <div class="option">
+      <input class="option__checkbox" id="" type="checkbox">
+      <label class="option__label" for="">
+        <span class="option__name"></span>
+        <span class="option__help u-txt-faded"></span>
+      </label>
+    </div>
+  </template>
+
+  <template id="optionGroup">
+    <div class="optionGroup">
+      <div class="optionGroup__name u-txt-m u-txt-faded"></div>
+      <div class="optionGroup__options"></div>
+    </div>
+  </template>
+
+  <script src="../webextension-polyfill.js"></script>
+  <script src="panel.js" type="module"></script>
+</body>
+</html>
