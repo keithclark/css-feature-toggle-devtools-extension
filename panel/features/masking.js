@@ -1,11 +1,13 @@
 import {propertyNameOption} from '../feature-helpers.js';
 
 export default propertyNameOption({
-  name: 'Clipping paths',
+  name: 'Masking',
   group: 'Visual Rendering',
-  help: 'Disable region clipping via `clip-path`',
+  help: 'Disable masking via `mask` and `mask-image`',
   propertyNames: [
-    'clip-path',
-    '-webkit-clip-path'
+    'mask',
+    'mask-image',
+    '-webkit-mask',
+    '-webkit-mask-image',
   ]
 });
