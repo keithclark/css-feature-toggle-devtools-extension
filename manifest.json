@@ -3,7 +3,7 @@
   "name": "CSS Feature Toggles",
   "version": "1.0.0",
   "author": "Keith Clark",
-  "description": "A devtools extension for toggling CSS features allowing developers to see how pages/apps render in browsers that don't support modern CSS features.",
+  "description": "A devtools extension to toggle support of selected CSS features for testing progressive enhancement fallbacks.",
   "homepage_url": "https://github.com/keithclark/css-feature-toggle-devtools-extension",
   "icons": {
     "48": "icons/icon-48.png"
