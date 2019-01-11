@@ -2,7 +2,7 @@ import {propertyValueOption} from '../feature-helpers.js';
 
 export default propertyValueOption({
   name: 'Flexbox layout',
-  group: 'Layout',
+  group: 'Box Layout',
   help: 'Disable support for the flexible box layout model',
   propertyName: 'display',
   propertyValues: [
