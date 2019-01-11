@@ -7,6 +7,7 @@ import supports from './features/supports.js';
 import compositing from './features/compositing.js';
 import clipPath from './features/clip-path.js';
 import shape from './features/shape.js';
+import objectFit from './features/object-fit.js';
 
 
 let features = [
@@ -18,7 +19,8 @@ let features = [
   compositing,
   clipPath,
   shape,
-  supports
+  supports,
+  objectFit
 ];
 
 
