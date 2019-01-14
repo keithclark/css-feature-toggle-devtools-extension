@@ -13,6 +13,7 @@ import masking from './features/masking.js';
 import shape from './features/shape.js';
 import objectFit from './features/object-fit.js';
 import customProperties from './features/custom-properties.js';
+import calc from './features/calc.js';
 
 
 let features = [
@@ -27,7 +28,8 @@ let features = [
   shape,
   supports,
   objectFit,
-  customProperties
+  customProperties,
+  calc
 ];
 
 
