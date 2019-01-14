@@ -12,6 +12,7 @@ import clipPath from './features/clip-path.js';
 import masking from './features/masking.js';
 import shape from './features/shape.js';
 import objectFit from './features/object-fit.js';
+import customProperties from './features/custom-properties.js';
 
 
 let features = [
@@ -25,7 +26,8 @@ let features = [
   masking,
   shape,
   supports,
-  objectFit
+  objectFit,
+  customProperties
 ];
 
 
