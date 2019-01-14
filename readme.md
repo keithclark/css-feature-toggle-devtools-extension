@@ -4,15 +4,25 @@ This devtools extension provides the ability to toggle-off CSS features, allowin
 
 ![Screengrab of the CSS Feature Toggle extension](screengrab.png)
 
-## Limitations
+## Supported features
 
-Toggling CSS features isn't supported everywhere *yet* so you should be aware of these caveats:
-
-* CSS features will only be disabled in external stylesheets and `<style>` elements of the top-level document.
-* Styles in `<iframes>` will not be disabled.
-* Inline styles (`<div style="...">`) will not be disabled.
-* Changes made to a stylesheet via the CSSOM will not be disabled.
-
+* Box Layout
+  * **Grid layout** — Disable support for the grid layout model
+  * **Flexbox layout** — Disable support for the flexible box layout model
+  * **Box model sizing** — Disable support for the `box-sizing` property
+  * **Sticky positioning** — Disable support for `position: sticky`
+* Visual Rendering
+  * **Transforms** — Disable support for 2D and 3D transforms
+  * **Compositing and blending** — Disable background and content blending modes
+  * **Clipping paths** — Disable region clipping via `clip-path`
+  * **Masking** — Disable masking via `mask` and `mask-image`
+* Content Layout
+  * **Shapes** — Disable support for `shape-inside` and `shape-outside`
+  * **Object sizing** — Disable support for the `object-fit` property
+* Other
+  * **Feature detection** — Disable `@supports` feature detection
+  * **Custom properties** — Disable support for the `var()` function
+  * **Mathematical expressions** — Disable support for the `calc()` function
 
 ## Supported browsers 
 
@@ -25,6 +35,15 @@ This extension uses devtools API features that aren't supported in Firefox yet:
   * `devtools.inspectedWindow.onResourceAdded`
   * `resource.getContent()`
   * `resource.setContent()`
+
+## Limitations
+
+Toggling CSS features isn't supported everywhere *yet* so you should be aware of these caveats:
+
+* CSS features will only be disabled in external stylesheets and `<style>` elements of the top-level document.
+* Styles in `<iframes>` will not be disabled.
+* Inline styles (`<div style="...">`) will not be disabled.
+* Changes made to a stylesheet via the CSSOM will not be disabled.
 
 ---
 
@@ -52,3 +71,4 @@ Extracted style content is passed through a series of regular expressions that r
 * `display: flex` becomes `display: -disabled-flex`
 * `@supports (...) {}` becomes `@-disabled-supports (...) {}`
 * `transform: ...` becomes `@-disabled-transform: ... {}`
+* `width: calc(...)` becomes `width: -disabled-calc(...)`
