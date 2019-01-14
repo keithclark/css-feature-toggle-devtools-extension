@@ -59,6 +59,20 @@ const atRuleIdentifier = identifier => {
 
 
 /**
+ * Create a CSS function replacer
+ *
+ * @param {*} names - The CSS function name to toggle
+ */
+const functionName = names => {
+  names = names.map(encodeRegExp).join('|');
+  return replacer(
+    new RegExp(`([:(/\\s])(${names})(?=\\()`, 'g'),
+    new RegExp(`([:(/\\s])-disabled-(${names})(?=\\()`, 'g')
+  );
+};
+
+
+/**
  * Returns a common option object
  *
  * @param {String} name - The name of the option
@@ -136,8 +150,29 @@ const atRuleIdentifierOption = opts => {
 };
 
 
+/**
+ * Helper for creating a feature toggle based one or more CSS function names.
+ * i.e. `calc()` or `linear-gradient()`
+ *
+ * @param {Object} opts - Feature options
+ * @param {String} opts.name - The name of the option
+ * @param {String} opts.group - The group the option belongs to
+ * @param {String} opts.help - The help text for the option
+ * @param {[String]} opts.functionNames - The function names that can be disabled
+ */
+const functionNameOption = opts => {
+  return option(
+    opts.name,
+    opts.group,
+    functionName(opts.functionNames),
+    opts.help
+  );
+};
+
+
 export {
   propertyNameOption,
   propertyValueOption,
-  atRuleIdentifierOption
+  atRuleIdentifierOption,
+  functionNameOption
 };
