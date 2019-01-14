@@ -1,7 +1,10 @@
+import {encodeRegExp} from './utils.js';
+
+
 /**
  * Creates replacer function for enabling and disabling CSS features using the
  * passed regular expressions
- * 
+ *
  * @param {RegExp} disableRegEx - The regular expression for disabling a feature
  * @param {RegExp} enableRegEx - The regular expression for re-enabling a feature
  */
@@ -14,39 +17,50 @@ const replacer = (disableRegEx, enableRegEx) => ({
 /**
  * Create a property name replacer
  * 
- * @param {*} names 
+ * @param {*} names - The property name to toggle
  */
-const propertyName = names => replacer(
-  new RegExp(`([;({/\\s])(${names.join('|')})(?=\\s*:)`, 'g'),
-  new RegExp(`([;({/\\s])-disabled-(${names.join('|')})(?=\\s*:)`, 'g')
-);
+const propertyName = names => {
+  names = names.map(encodeRegExp).join('|');
+  return replacer(
+    new RegExp(`([;({/\\s])(${names})(?=\\s*:)`, 'g'),
+    new RegExp(`([;({/\\s])-disabled-(${names})(?=\\s*:)`, 'g')
+  );
+};
 
 
 /**
  * Create a property value replacer
- * 
- * @param {*} names 
+ *
+ * @param {*} name - The property name
+ * @param {*} values - The values to toggle
  */
-const propertyValue = (name, values) => replacer(
-  new RegExp(`([;({/\\s]${name}\\s*:\\s*)(${values.join('|')})(?=[)}/;\\s])`, 'g'),
-  new RegExp(`([;({/\\s]${name}\\s*:\\s*)(?:-disabled-(${values.join('|')}))(?=[)}/;\\s])`, 'g')
-);
+const propertyValue = (name, values) => {
+  name = encodeRegExp(name);
+  values = values.map(encodeRegExp).join('|');
+  return replacer(
+    new RegExp(`([;({/\\s]${name}\\s*:\\s*)(${values})(?=[)}/;\\s])`, 'g'),
+    new RegExp(`([;({/\\s]${name}\\s*:\\s*)(?:-disabled-(${values}))(?=[)}/;\\s])`, 'g')
+  );
+};
 
 
 /**
  * Create an at-rule identifier replacer
- * 
- * @param {*} names 
+ *
+ * @param {*} identifier - The identifier to toggle
  */
-const atRuleIdentifier = identifier => replacer(
-  new RegExp(`(@)(${identifier})`, 'g'),
-  new RegExp(`(@)-disabled-(${identifier})`, 'g')
-);
+const atRuleIdentifier = identifier => {
+  identifier = encodeRegExp(identifier);
+  return replacer(
+    new RegExp(`(@)(${identifier})`, 'g'),
+    new RegExp(`(@)-disabled-(${identifier})`, 'g')
+  );
+};
 
 
 /**
  * Returns a common option object
- * 
+ *
  * @param {String} name - The name of the option
  * @param {String} group - The group the option belongs to
  * @param {Object} toggle - The enable/disable toggle replacers 
@@ -63,7 +77,7 @@ const option = (name, group, toggle, help) => ({
 /**
  * Helper for creating a feature toggle based one or more CSS property names.
  * i.e. `transform` or `clip-path`
- * 
+ *
  * @param {Object} opts - Feature options
  * @param {String} opts.name - The name of the option
  * @param {String} opts.group - The group the option belongs to
@@ -83,7 +97,7 @@ const propertyNameOption = opts => {
 /**
  * Helper for creating a feature toggle based on one or more property values.
  * i.e `display: flex`
- * 
+ *
  * @param {Object} opts - Feature options
  * @param {String} opts.name - The name of the option
  * @param {String} opts.group - The group the option belongs to
@@ -105,7 +119,7 @@ const propertyValueOption = opts => {
 /**
  * Helper for creating a feature toggle for at rule indentifiers values - i.e
  * `@supports`
- * 
+ *
  * @param {Object} opts - Feature options
  * @param {String} opts.name - The name of the option
  * @param {String} opts.group - The group the option belongs to
