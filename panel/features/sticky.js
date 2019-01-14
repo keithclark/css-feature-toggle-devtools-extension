@@ -2,7 +2,7 @@ import {propertyValueOption} from '../feature-helpers.js';
 
 export default propertyValueOption({
   name: 'Sticky positioning',
-  group: 'Visual Rendering',
+  group: 'Box Layout',
   help: 'Disable support for `position: sticky`',
   propertyName: 'position',
   propertyValues: [
