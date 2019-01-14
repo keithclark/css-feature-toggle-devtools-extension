@@ -1,3 +1,6 @@
+import {encodeCssText} from './utils.js';
+
+
 import grid from './features/grid.js';
 import flexbox from './features/flexbox.js';
 import boxSizing from './features/box-sizing.js';
@@ -83,16 +86,6 @@ const updateCssText = cssText => {
     }
   });
   return cssText;
-}
-
-
-/**
- * Encodes the passed CSS text
- * 
- * @param {string} cssText 
- */
-const encodeCssText = (cssText = '') => {
-  return cssText.replace(/\\/g,'\\\\').replace(/`/g, '\\`');
 }
 
 
