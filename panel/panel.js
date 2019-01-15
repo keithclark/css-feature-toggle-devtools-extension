@@ -14,6 +14,7 @@ import shape from './features/shape.js';
 import objectFit from './features/object-fit.js';
 import customProperties from './features/custom-properties.js';
 import calc from './features/calc.js';
+import transitions from './features/transitions.js';
 
 
 let features = [
@@ -29,7 +30,8 @@ let features = [
   supports,
   objectFit,
   customProperties,
-  calc
+  calc,
+  transitions
 ];
 
 
@@ -63,8 +65,8 @@ const updateDocumentStylesheets = () => {
 
 /**
  * Updates the cssText of the passed stylesheet resource
- * 
- * @param {*} resource 
+ *
+ * @param {*} resource
  */
 const updateStylesheet = resource => {
   resource.getContent(content => {
@@ -78,8 +80,8 @@ const updateStylesheet = resource => {
 
 /**
  * Update the passed CSS text with the relvant settings
- * 
- * @param {*} resource 
+ *
+ * @param {*} resource
  */
 const updateCssText = cssText => {
   features.forEach(feature => {
@@ -93,7 +95,7 @@ const updateCssText = cssText => {
 }
 
 
-/** 
+/**
  * Retrives the cssText of each <style> element using either the textContent
  * property or, in the case of JS injected style rules, by walking the CSSOM
  * and retreiving the `cssText` property of each style rule. This function is
@@ -110,10 +112,10 @@ const getCssText = () => {
 
 
 /**
- * Sets the textContent of every <style> using the passed CSS text. This 
+ * Sets the textContent of every <style> using the passed CSS text. This
  * function is converted to a string and evaluated in the inspected document.
- * 
- * @param {*} styles 
+ *
+ * @param {*} styles
  */
 const setCssText = styles => {
   document.querySelectorAll("style").forEach(style => {
@@ -138,7 +140,7 @@ const updateDocumentStyleElements = () => {
     res = res.map(encodeCssText).map(updateCssText);
     inspectedWindow.eval(`(${setCssText})([\`${res.join('\`,\`')}\`])`);
   });
-  
+
   // When the bug is fixed, this code should do the job
   /*
   browser.devtools.inspectedWindow.eval(`(${getCssText})()`).then(result => {
@@ -171,7 +173,7 @@ const createOptions = () => {
     let nameElem = optionTemplate.querySelector('.option__name');
     let helpElem = optionTemplate.querySelector('.option__help');
     let group = feature.group || 'Default';
-    
+
     nameElem.textContent = feature.name;
     helpElem.textContent = feature.help;
     labelElem.setAttribute('for', id);
@@ -220,8 +222,8 @@ const updateTheme = () => {
 /**
  * Event handler for `onResourceAdded`, which is dynamically bound when the user
  * sets/unsets any of the panel options
- * 
- * @param {*} resource 
+ *
+ * @param {*} resource
  */
 const resourceAddedListener = resource => {
   if (resource.type === 'document') {
