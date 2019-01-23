@@ -12,6 +12,7 @@ import objectFit from './features/object-fit.js';
 import customProperties from './features/custom-properties.js';
 import calc from './features/calc.js';
 import transitions from './features/transitions.js';
+import columns from './features/columns.js';
 
 
 export default [
@@ -28,5 +29,6 @@ export default [
   objectFit,
   customProperties,
   calc,
-  transitions
+  transitions,
+  columns
 ];
