@@ -13,7 +13,7 @@ import customProperties from './features/custom-properties.js';
 import calc from './features/calc.js';
 import transitions from './features/transitions.js';
 import columns from './features/columns.js';
-
+import animations from './features/animations.js';
 
 export default [
   grid,
@@ -30,5 +30,6 @@ export default [
   customProperties,
   calc,
   transitions,
+  animations,
   columns
 ];
