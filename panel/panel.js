@@ -1,38 +1,11 @@
+import {
+  getStylesheets,
+  getDocuments,
+  getStyleElementStyles,
+  setStyleElementStyles
+} from './resource-helpers.js';
 import {encodeCssText} from './utils.js';
-
-
-import grid from './features/grid.js';
-import flexbox from './features/flexbox.js';
-import boxSizing from './features/box-sizing.js';
-import sticky from './features/sticky.js';
-import transforms from './features/transforms.js';
-import supports from './features/supports.js';
-import compositing from './features/compositing.js';
-import clipPath from './features/clip-path.js';
-import masking from './features/masking.js';
-import shape from './features/shape.js';
-import objectFit from './features/object-fit.js';
-import customProperties from './features/custom-properties.js';
-import calc from './features/calc.js';
-import transitions from './features/transitions.js';
-
-
-let features = [
-  grid,
-  flexbox,
-  boxSizing,
-  sticky,
-  transforms,
-  compositing,
-  clipPath,
-  masking,
-  shape,
-  supports,
-  objectFit,
-  customProperties,
-  calc,
-  transitions
-];
+import features from './feature-list.js';
 
 
 const optionsTemplate = document.getElementById('option');
@@ -41,22 +14,50 @@ const containerOptions = document.getElementById('optionsContainer');
 
 
 /**
- * Applies the extension settings to the currently inspected document.
+ * Applies the extension settings to any documents in the currently inspected
+ * window.
  */
-const updateDocument = () => {
-  updateDocumentStylesheets();
-  updateDocumentStyleElements();
-}
+const updateInspectedWindow = () => {
+  return Promise.all([
+    updateInspectedWindowStylesheets(),
+    updateInspectedWindowStyleElements()
+  ]);
+};
 
 
 /**
- * Applies the current extension settings to any stylesheet resources
+ * Applies the current extension settings to any stylesheet resources in the
+ * inspected window.
  */
-const updateDocumentStylesheets = () => {
-  chrome.devtools.inspectedWindow.getResources(resources => {
-    resources.forEach(resource => {
-      if (resource.type === 'stylesheet') {
-        updateStylesheet(resource);
+const updateInspectedWindowStylesheets = async () => {
+  let stylesheets = await getStylesheets();
+  return stylesheets.map(updateDocumentStylesheet);
+};
+
+
+/**
+ * Applies the current extension settings to any <style> elements in document
+ * resources in the inspected window.
+ */
+const updateInspectedWindowStyleElements = async () => {
+  let documents = await getDocuments();
+  return documents.map(updateDocumentStyleElements);
+};
+
+
+/**
+ * Updates the cssText of the passed stylesheet resource
+ *
+ * @param {Resource} resource
+ */
+const updateDocumentStylesheet = resource => {
+  return new Promise(resolve => {
+    resource.getContent(content => {
+      let newContent = updateCssText(content);
+      if (newContent !== content) {
+        resource.setContent(newContent, true, resolve);
+      } else {
+        resolve();
       }
     });
   });
@@ -64,24 +65,21 @@ const updateDocumentStylesheets = () => {
 
 
 /**
- * Updates the cssText of the passed stylesheet resource
- *
- * @param {*} resource
+ * Updates <style> elements of a document resource.
+ * 
+ * @param {Resource} resource
  */
-const updateStylesheet = resource => {
-  resource.getContent(content => {
-    let newContent = updateCssText(content);
-    if (newContent !== content) {
-      resource.setContent(newContent, true);
-    }
-  });
-}
+const updateDocumentStyleElements = async resource => {
+  let styles = await getStyleElementStyles(resource);
+  styles = styles.map(encodeCssText).map(updateCssText);
+  return setStyleElementStyles(resource, styles);
+};
 
 
 /**
  * Update the passed CSS text with the relvant settings
  *
- * @param {*} resource
+ * @param {string} cssText
  */
 const updateCssText = cssText => {
   features.forEach(feature => {
@@ -92,68 +90,12 @@ const updateCssText = cssText => {
     }
   });
   return cssText;
-}
-
-
-/**
- * Retrives the cssText of each <style> element using either the textContent
- * property or, in the case of JS injected style rules, by walking the CSSOM
- * and retreiving the `cssText` property of each style rule. This function is
- * converted to a string and evaluated in the inspected document.
- */
-const getCssText = () => {
-  return Array.from(document.querySelectorAll("style")).map(style => {
-    if (style.textContent) {
-      return style.textContent;
-    }
-    return Array.from(style.sheet.cssRules).map(rule => rule.cssText).join('');
-  });
 };
 
 
 /**
- * Sets the textContent of every <style> using the passed CSS text. This
- * function is converted to a string and evaluated in the inspected document.
- *
- * @param {*} styles
+ * Checks to see if all features are enabled (toggled on).
  */
-const setCssText = styles => {
-  document.querySelectorAll("style").forEach(style => {
-    let newStyles = styles.shift();
-    if (newStyles !== style.textContent) {
-      style.textContent = newStyles;
-    }
-  });
-};
-
-
-/**
- * Updates <style> elements of the current document.
- */
-const updateDocumentStyleElements = () => {
-
-  // Due to a bug with the web extension polyfill, we can't use the promise-enabled
-  // `browser.devtools.inspectedWindow.eval()` call here so we need to use the `chrome`
-  // https://github.com/mozilla/webextension-polyfill/issues/168
-  let inspectedWindow = chrome.devtools.inspectedWindow;
-  inspectedWindow.eval(`(${getCssText})()`, (res, ex) => {
-    res = res.map(encodeCssText).map(updateCssText);
-    inspectedWindow.eval(`(${setCssText})([\`${res.join('\`,\`')}\`])`);
-  });
-
-  // When the bug is fixed, this code should do the job
-  /*
-  browser.devtools.inspectedWindow.eval(`(${getCssText})()`).then(result => {
-    let styles = result[0];
-    if (styles) {
-      styles = styles.map(encodeCssText).map(updateCssText);
-      chrome.devtools.inspectedWindow.eval(`(${setCssText})([\`${styles.join('\`,\`')}\`])`);
-    }
-  });
-  */
-};
-
-
 const allFeaturesEnabled = () => features.every(feature => !feature.disabled);
 
 
@@ -163,7 +105,6 @@ const allFeaturesEnabled = () => features.every(feature => !feature.disabled);
 const createOptions = () => {
 
   let optionGroups = {};
-
 
   features.forEach((feature, i) => {
     let optionTemplate = document.importNode(optionsTemplate.content, true);
@@ -191,7 +132,7 @@ const createOptions = () => {
         onResourceAdded.removeListener(resourceAddedListener);
       }
 
-      updateDocument();
+      updateInspectedWindow();
 
     });
 
@@ -199,10 +140,10 @@ const createOptions = () => {
     if (!optionGroups[group]) {
       let optionGroupTemplate = document.importNode(optionGroupsTemplate.content, true);
       optionGroupTemplate.querySelector('.optionGroup__name').textContent = group;
-      optionGroups[group] = optionGroupTemplate
+      optionGroups[group] = optionGroupTemplate;
     }
 
-    optionGroups[group].querySelector('.optionGroup__options').appendChild(optionTemplate)
+    optionGroups[group].querySelector('.optionGroup__options').appendChild(optionTemplate);
 
   });
 
@@ -227,17 +168,9 @@ const updateTheme = () => {
  */
 const resourceAddedListener = resource => {
   if (resource.type === 'document') {
-    // If the top-level document has changed then we need to update any inline
-    // <style> elements.
-    chrome.tabs.get(browser.devtools.inspectedWindow.tabId, tab => {
-      if (tab.url === resource.url) {
-        updateDocumentStyleElements();
-      }
-    });
+    updateDocumentStyleElements(resource);
   } else if (resource.type === 'stylesheet') {
-    // If the resource is a stylesheet we need to update its content to reflect
-    // the current settings.
-    updateStylesheet(resource);
+    updateDocumentStylesheet(resource);
   }
 }
 
