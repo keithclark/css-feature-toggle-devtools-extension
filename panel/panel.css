@@ -29,7 +29,9 @@ body {
   background: #000;
   color: #ccc;
 }
-
+.theme--dark .option__checkbox {
+  filter: invert(80%);
+}
 
 
 .option {
