@@ -14,6 +14,7 @@ import calc from './features/calc.js';
 import transitions from './features/transitions.js';
 import columns from './features/columns.js';
 import animations from './features/animations.js';
+import fonts from './features/fonts.js';
 
 export default [
   grid,
@@ -31,5 +32,6 @@ export default [
   calc,
   transitions,
   animations,
-  columns
+  columns,
+  fonts
 ];
