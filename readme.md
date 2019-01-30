@@ -26,15 +26,16 @@ This devtools extension provides the ability to toggle-off CSS features, allowin
   * Feature detection — *Disable `@supports` feature detection*
   * Custom properties — *Disable support for the `var()` function*
   * Mathematical expressions — *Disable support for the `calc()` function*
+  * Custom fonts — *Disable loading of custom fonts with `@font-face`*
 
 ## Supported browsers 
 
-* Chrome
+* Chrome — installable via [Chrome Web Store](https://chrome.google.com/webstore/detail/css-feature-toggles/aeinmfddnniiloadoappmdnffcbffnjg)
 * Opera
 
 This extension uses devtools API features that aren't supported in Firefox yet:
 
-  * `devtools.inpectedWindow.getResources()`
+  * `devtools.inspectedWindow.getResources()`
   * `devtools.inspectedWindow.onResourceAdded`
   * `resource.getContent()`
   * `resource.setContent()`
