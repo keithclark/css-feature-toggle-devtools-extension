@@ -5,7 +5,7 @@ export default propertyNameOption({
   group: 'Visual Rendering',
   help: 'Disable region clipping via `clip-path`',
   propertyNames: [
-    'clip-path',
-    '-webkit-clip-path'
+    '-webkit-clip-path',
+    'clip-path'
   ]
 });

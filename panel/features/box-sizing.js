@@ -5,7 +5,8 @@ export default propertyNameOption({
   group: 'Box Layout',
   help: 'Disable support for the `box-sizing` property',
   propertyNames: [
-    'box-sizing',
-    '-webkit-box-sizing'
+    '-webkit-box-sizing',
+    '-moz-box-sizing',
+    'box-sizing'
   ]
 });

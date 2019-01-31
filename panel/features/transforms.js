@@ -5,7 +5,8 @@ export default propertyNameOption({
   group: 'Visual Rendering',
   help: 'Disable support for 2D and 3D transforms',
   propertyNames: [
-    'transform',
-    '-webkit-transform'
+    '-webkit-transform',
+    '-moz-transform',
+    'transform'
   ]
 });

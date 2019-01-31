@@ -6,7 +6,7 @@ export default propertyValueOption({
   help: 'Disable support for `position: sticky`',
   propertyName: 'position',
   propertyValues: [
-    'sticky',
-    '-webkit-sticky'
+    '-webkit-sticky',
+    'sticky'
   ]
 });

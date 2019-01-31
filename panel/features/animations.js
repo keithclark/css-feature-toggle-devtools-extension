@@ -6,8 +6,10 @@ export default propertyNameOption({
   help: 'Disable support for animations',
   propertyNames: [
     '-webkit-animation',
+    '-moz-animation',
     'animation',
     '-webkit-animation-name',
+    '-moz-animation-name',
     'animation-name'
   ]
 });

@@ -6,10 +6,10 @@ export default propertyNameOption({
   help: 'Disable support for transitions',
   propertyNames: [
     '-webkit-transition',
+    '-moz-transition',
     'transition',
-    '-webkit-transition-duration',
-    'transition-duration',
-    '-webkit-transition-delay',
-    'transition-delay'
+    '-webkit-transition-property',
+    '-moz-transition-property',
+    'transition-property'
   ]
 });

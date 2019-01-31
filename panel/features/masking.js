@@ -5,9 +5,9 @@ export default propertyNameOption({
   group: 'Visual Rendering',
   help: 'Disable masking via `mask` and `mask-image`',
   propertyNames: [
-    'mask',
-    'mask-image',
     '-webkit-mask',
+    'mask',
     '-webkit-mask-image',
+    'mask-image'
   ]
 });
