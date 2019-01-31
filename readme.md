@@ -2,6 +2,8 @@
 
 This devtools extension provides the ability to toggle-off CSS features, allowing developers to see how their pages and applications render and fallback in browsers that don't support modern CSS features.
 
+Available for Chrome via the [Chrome Web Store](https://chrome.google.com/webstore/detail/css-feature-toggles/aeinmfddnniiloadoappmdnffcbffnjg).
+
 ![Screengrab of the CSS Feature Toggle extension](screengrab.png)
 
 ## Supported features
