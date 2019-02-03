@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CSS Feature Toggle Test Page</title>
+<style>
+  body {
+    font: 85%/1.5 Arial;
+  }
+  h1 {
+    font-size: 175%;
+    margin: 0;
+  }
+  h2 {
+    font-size: 120%;
+    margin: 0;
+  }
+  h3 {
+    font-size: 100%;
+    margin: 0;
+  }
+
+  .testGroup__tests {
+    border:1px solid #ccc;
+    background: #eee;
+    padding: .25rem;
+    border-radius: 5px;
+  }
+
+  .testGroup + .testGroup {
+    margin-top: 1em;
+  }
+
+  .test {
+    display: table;
+  }
+
+  .test__title, .test__output {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  .test__title {
+    padding-left: .25em;
+  }
+
+  .test__output {
+    padding: .25rem;
+    font-size: 0;
+  }
+
+  .test__style {
+    white-space: pre;
+  }
+
+  .test__indicator {
+    background: #d30;
+    width: 24px;
+    height: 24px;
+    overflow: hidden;
+  }
+
+  #compat-view:checked ~ .testGroup {
+    display: table;
+    width: 100%;
+  } 
+  #compat-view:checked ~ .testGroup .testGroup__title {
+    display: table-cell;
+    vertical-align: middle;
+    width: 14em;
+  } 
+  #compat-view:checked ~ .testGroup .testGroup__tests {
+    display: table-cell;
+    font-size: 0;
+  } 
+  #compat-view:checked ~ .testGroup .test {
+    display: inline-block;
+  } 
+</style>
+</head>
+<body>
+  <h1>Feature toggle tests</h1>
+  <input id="compat-view" type="checkbox" checked>
+  <label for="compat-view">Compact view</label>
+  <hr>
+
+  <template id="group-template">
+    <div class="testGroup">
+      <h2 class="testGroup__title"></h2>
+      <div class="testGroup__tests"></div>
+    </div>
+  </template>
+
+  <template id="test-template">
+    <div class="test">
+      <div class="test__output">
+        <div class="test__indicator"></div>
+      </div>
+      <h3 class="test__title"></h3>
+      <style class="test__style"></style>
+    </div>
+  </template>
+
+  <script src="test.js"></script>
+
+  <script src="features/grid.js"></script>
+  <script src="features/flexbox.js"></script>
+  <script src="features/box-sizing.js"></script>
+  <script src="features/sticky.js"></script>
+  <script src="features/columns.js"></script>
+  <script src="features/transforms.js"></script>
+  <script src="features/compositing.js"></script>
+  <script src="features/clip-path.js"></script>
+  <script src="features/masking.js"></script>
+  <script src="features/transitions.js"></script>
+  <script src="features/animations.js"></script>
+  <script src="features/shapes.js"></script>
+  <script src="features/object-fit.js"></script>
+  <script src="features/supports.js"></script>
+  <script src="features/custom-properties.js"></script>
+  <script src="features/calc.js"></script>
+  <script src="features/fonts.js"></script>
+</body>
+</html>
