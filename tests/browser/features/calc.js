@@ -16,3 +16,14 @@ addTest({
     background: <supported-color>;
   }`
 });
+
+addTest({
+  name: '-webkit-calc',
+  group: 'Mathematical expressions',
+  css: `<indicator-selector>::before {
+    content: '';
+    display: block;
+    padding: -webkit-calc(50% + 0px);
+    background: <supported-color>;
+  }`
+});
