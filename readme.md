@@ -65,6 +65,10 @@ Toggling CSS features isn't supported everywhere *yet* so you should be aware of
 1. Update code
 2. Close/re-open devtools to see your changes
 
+## Testing
+
+In the `/tests/browser` directory you'll find a test page which can be opened in a supported browser. The page contains one or more tests for each toggle. If you make changes and want to submit a pull request, please ensure the tests behave first. If you're adding a new toggle, please try to update the page with relevant tests or ask for assistance in your pull request.
+
 ---
 
 ## How it works
