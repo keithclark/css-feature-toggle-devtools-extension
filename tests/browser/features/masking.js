@@ -26,7 +26,7 @@ addTest({
     width: 100%;
     height: 100%;
     background: <unsupported-color>;
-    mask-image: linear-gradient(transparent, transparent);;
+    mask-image: linear-gradient(transparent, transparent);
   }`
 });
 
@@ -42,7 +42,7 @@ addTest({
     width: 100%;
     height: 100%;
     background: <unsupported-color>;
-    -webkit-mask: linear-gradient(transparent, transparent);;
+    -webkit-mask: linear-gradient(transparent, transparent);
   }`
 });
 
@@ -58,6 +58,6 @@ addTest({
     width: 100%;
     height: 100%;
     background: <unsupported-color>;
-    -webkit-mask-image: linear-gradient(transparent, transparent);;
+    -webkit-mask-image: linear-gradient(transparent, transparent);
   }`
 });

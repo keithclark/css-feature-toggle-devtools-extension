@@ -8,11 +8,11 @@ addTest({
   group: 'Animations',
   css: `<indicator-selector> {
     animation: 0s test forwards;
-    background: <unsupported-color>'
+    background: <unsupported-color>
   }
   @keyframes test {
     100% {
-      background: <supported-color>'
+      background: <supported-color>
     }
   }`
 });
@@ -32,7 +32,7 @@ addTest({
   }
   @keyframes test2 {
     100% {
-      background: <supported-color>'
+      background: <supported-color>
     }
   }`
 });
@@ -50,7 +50,7 @@ addTest({
   }
   @-webkit-keyframes test3 {
     100% {
-      background: <supported-color>'
+      background: <supported-color>
     }
   }`
 });
@@ -68,7 +68,7 @@ addTest({
   }
   @-webkit-keyframes test4 {
     100% {
-      background: <supported-color>'
+      background: <supported-color>
     }
   }`
 });
