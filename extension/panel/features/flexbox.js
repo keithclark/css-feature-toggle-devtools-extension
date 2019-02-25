@@ -9,6 +9,8 @@ export default propertyValueOption({
     'flex',
     'inline-flex',
     '-webkit-flex',
-    '-webkit-inline-flex'
+    '-webkit-inline-flex',
+    '-webkit-box',
+    '-webkit-inline-box'
   ]
 });
