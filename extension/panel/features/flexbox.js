@@ -7,6 +7,8 @@ export default propertyValueOption({
   propertyName: 'display',
   propertyValues: [
     'flex',
-    'inline-flex'
+    'inline-flex',
+    '-webkit-flex',
+    '-webkit-inline-flex'
   ]
 });

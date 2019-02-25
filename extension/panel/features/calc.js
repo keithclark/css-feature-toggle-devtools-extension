@@ -5,6 +5,7 @@ export default functionNameOption({
   group: 'Other',
   help: 'Disable support for the `calc()` function',
   functionNames: [
-    'calc'
+    'calc',
+    '-webkit-calc'
   ]
 });

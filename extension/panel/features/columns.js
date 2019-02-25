@@ -7,6 +7,9 @@ export default propertyNameOption({
   propertyNames: [
     'columns',
     'column-count',
-    'column-width'
+    'column-width',
+    '-webkit-columns',
+    '-webkit-column-count',
+    '-webkit-column-width'
   ]
 });
