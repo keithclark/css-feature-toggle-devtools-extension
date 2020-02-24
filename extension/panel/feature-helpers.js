@@ -72,12 +72,21 @@ const functionName = names => {
 };
 
 
+const mediaFeature = names => {
+  names = names.map(encodeRegExp).join('|');
+  return replacer(
+    new RegExp(`(\\(\\s*)(${names})(?=\\s*:)`, 'g'),
+    new RegExp(`(\\(\\s*)-disabled-(${names})(?=\\s*:)`, 'g'),
+  );
+};
+
+
 /**
  * Returns a common option object
  *
  * @param {String} name - The name of the option
  * @param {String} group - The group the option belongs to
- * @param {Object} toggle - The enable/disable toggle replacers 
+ * @param {Object} toggle - The enable/disable toggle replacers
  * @param {String} help - The help text for the option
  */
 const option = (name, group, toggle, help) => ({
@@ -170,9 +179,29 @@ const functionNameOption = opts => {
 };
 
 
+/**
+ * Helper for creating a feature toggle based one or more CSS media features.
+ * i.e. `(prefers-reduced-motion: reduce)` or `(pointer: any)`
+ *
+ * @param {Object} opts - Feature options
+ * @param {String} opts.name - The name of the option
+ * @param {String} opts.group - The group the option belongs to
+ * @param {String} opts.help - The help text for the option
+ * @param {[String]} opts.functionNames - The features names that can be disabled
+ */
+const mediaFeatureOption = opts => {
+  return option(opts.name,
+    opts.group,
+    mediaFeature(opts.featureNames),
+    opts.help
+  )
+};
+
+
 export {
   propertyNameOption,
   propertyValueOption,
   atRuleIdentifierOption,
-  functionNameOption
+  functionNameOption,
+  mediaFeatureOption
 };
