@@ -53,7 +53,7 @@ export const evalInDocument = (expression, resource) => {
     expression = `(${expression})()`;
   }
 
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     chrome.devtools.inspectedWindow.eval(expression, options, (res, err) => {
       if (err) {
         reject(err);
