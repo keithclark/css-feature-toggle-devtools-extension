@@ -64,14 +64,6 @@ body {
   display: flex;
   flex-direction: column;
 }
-.container__header {
-  display: flex;
-  align-items: center;
-  display: none
-}
-.container__header > * {
-  margin-right: var(--spacing-unit);
-}
 .container__body {
   flex: 1;
   overflow: auto;
