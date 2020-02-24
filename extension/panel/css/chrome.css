@@ -1,0 +1,101 @@
+:root {
+  --root-fg-color: rgb(48, 57, 66);
+  --root-bg-color: #fff;
+  --toolbar-bg-color: #f3f3f3;
+  --toolbar-focus-color: rgb(224, 224, 224);
+  --divider-color: #d0d0d0;
+  --spacing-unit: .5rem;
+}
+
+:root.theme--dark {
+  --root-fg-color: rgb(189, 198, 207);
+  --root-bg-color: rgb(36, 36, 36);
+  --toolbar-bg-color: #333;
+  --toolbar-focus-color: rgb(67, 67, 67);
+  --divider-color: #525252;
+}
+
+
+/**
+ * buttons
+ */
+.button {
+  border: none;
+  background: transparent;
+  color: inherit;
+  user-select: none;
+}
+
+.button--toolbar {
+  border-radius: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  background: transparent;
+  border: none;
+  padding: 4px 5px;
+  outline-width: 0;
+}
+
+.button--toolbar svg {
+  width: 14px;
+  display: block;
+  filter: invert(.45);
+}
+
+.button--active svg {
+  fill: #1a73e8;
+  filter: none;
+}
+
+.button--toolbar:hover svg {
+  filter: none;
+}
+
+:root.keyboard-focus .button--toolbar:focus {
+  background-color: var(--toolbar-focus-color)
+}
+
+:root.theme--dark .button--toolbar svg {
+  filter: invert(.55);
+}
+:root.theme--dark .button--toolbar:hover svg {
+  filter: invert(.75);
+}
+:root.theme--dark .button--active svg {
+  filter: invert(1);
+
+}
+
+/**
+ * inputs
+ */
+:root.theme--dark .option__checkbox {
+  filter: invert(80%);
+}
+
+
+/**
+ * toolbars
+ */
+.toolbar {
+  display: flex;
+  align-items: center;
+  padding: 2px 3px;
+  background: var(--toolbar-bg-color);
+  border-bottom: 1px solid var(--divider-color);
+}
+
+.toolbar > *:not(:first-child) {
+  margin-left: 5px;
+}
+
+.toolbar__separator {
+  background-color: #ccc;
+  width: 1px;
+  height: 16px;
+  display: inline-block;
+}
+
+:root.theme--dark .toolbar__separator {
+  background-color: rgb(61, 61, 61);
+}
