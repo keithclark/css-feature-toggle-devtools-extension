@@ -163,6 +163,20 @@ const updateTheme = () => {
   document.documentElement.classList.add(`theme--${browser.devtools.panels.themeName}`);
 }
 
+
+/**
+ * Sync the UI
+ */
+const updateUI = () => {
+  document.getElementById('pause').classList.toggle('button--active', paused);
+  features.forEach(feature => {
+    let input = document.getElementById(`feature-${feature.id}`);
+    input.checked = feature.disabled;
+    input.disabled = paused;
+  });
+}
+
+
 /**
  * Reset all extension options
  */
@@ -180,8 +194,7 @@ const resetOptions = () => {
  */
 const pause = () => {
   paused = !paused;
-  document.getElementById('pause').classList.toggle('button--active', paused);
-  document.querySelectorAll('.optionGroup__options input').forEach(elem => elem.disabled = paused);
+  updateUI();
   updateInspectedWindow();
 }
 
@@ -207,8 +220,8 @@ const resourceAddedListener = resource => {
  */
 const saveExtensionState = async() => {
   let documents = await getDocuments();
-  let toggles = features.filter(feature => feature.disabled).map(feature => feature.id);
-  saveState('ui', toggles, documents[0]);
+  let disabled = features.filter(feature => feature.disabled).map(feature => feature.id);
+  saveState('ui', {paused, disabled}, documents[0]);
 }
 
 
@@ -221,10 +234,11 @@ const loadExtensionState = async() => {
   if (!state) {
     return;
   }
-  state.forEach(i => {
-    features[i].disabled = true;
-    document.getElementById(`feature-${i}`).checked = true;
+  state.disabled.forEach(toggleId => {
+    features[toggleId].disabled = true;
   });
+  paused = state.paused;
+  updateUI();
 }
 
 
