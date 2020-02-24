@@ -72,6 +72,14 @@ const functionName = names => {
 };
 
 
+/**
+ * Create a CSS media feature replacer for rules such as:
+ *
+ * @media (pointer: any) {...}
+ * @media (prefers-reduced-motion: reduce) {...}
+ *
+ * @param {*} names - The CSS feature to toggle
+ */
 const mediaFeature = names => {
   names = names.map(encodeRegExp).join('|');
   return replacer(
@@ -98,13 +106,14 @@ const option = (name, group, toggle, help) => ({
 
 
 /**
- * Helper for creating a help text snippet that lists properties
+ * Helper for creating a help text snippet that lists the values of a feature
+ * that will be disabled. Removes vendor prefixes to keep contents short.
  *
  * @param {*} props
  * @param {*} singular
  * @param {*} plural
  */
-const createHelpFromProperties = (props, singular, plural, suffix = '') => {
+const createHelpText = (props, singular, plural = singular + 's') => {
   let standardsProps = props.filter(prop => !prop.startsWith('-'));
   let text = ['Disable'];
   if (standardsProps.length > 1) {
@@ -112,8 +121,7 @@ const createHelpFromProperties = (props, singular, plural, suffix = '') => {
   } else {
     text.push(`the '${standardsProps[0]}' ${singular}`);
   }
-  text.push(suffix);
-  return text.join(' ')
+  return text.join(' ');
 }
 
 
@@ -124,15 +132,14 @@ const createHelpFromProperties = (props, singular, plural, suffix = '') => {
  * @param {Object} opts - Feature options
  * @param {String} opts.name - The name of the option
  * @param {String} opts.group - The group the option belongs to
- * @param {String} opts.help - The help text for the option
  * @param {[String]} opts.propertyNames - The property names that can be disabled
  */
-const propertyNameOption = opts => {
+const propertyNameOption = ({name, group, propertyNames}) => {
   return option(
-    opts.name,
-    opts.group,
-    propertyName(opts.propertyNames),
-    createHelpFromProperties(opts.propertyNames, 'property', 'properties'),
+    name,
+    group,
+    propertyName(propertyNames),
+    createHelpText(propertyNames, 'property', 'properties'),
   );
 };
 
@@ -144,16 +151,15 @@ const propertyNameOption = opts => {
  * @param {Object} opts - Feature options
  * @param {String} opts.name - The name of the option
  * @param {String} opts.group - The group the option belongs to
- * @param {String} opts.help - The help text for the option
  * @param {String} opts.propertyName - The property these values apply to
  * @param {[String]} opts.propertyValues - The values that can be disabled
  */
-const propertyValueOption = opts => {
+const propertyValueOption = ({name, group, propertyName, propertyValues}) => {
   return option(
-    opts.name,
-    opts.group,
-    propertyValue(opts.propertyName, opts.propertyValues),
-    createHelpFromProperties(opts.propertyValues, 'value', 'values', `of the '${opts.propertyName}' property`),
+    name,
+    group,
+    propertyValue(propertyName, propertyValues),
+    createHelpText(propertyValues, 'value') + ` of the '${propertyName}' property`,
   );
 };
 
@@ -165,15 +171,14 @@ const propertyValueOption = opts => {
  * @param {Object} opts - Feature options
  * @param {String} opts.name - The name of the option
  * @param {String} opts.group - The group the option belongs to
- * @param {String} opts.help - The help text for the option
  * @param {String} opts.identifier - The at-rule identifier can be disabled
  */
-const atRuleIdentifierOption = opts => {
+const atRuleIdentifierOption = ({name, group, identifier})  => {
   return option(
-    opts.name,
-    opts.group,
-    atRuleIdentifier(opts.identifier),
-    createHelpFromProperties([opts.identifier], 'at-rule', 'at-rules'),
+    name,
+    group,
+    atRuleIdentifier(identifier),
+    createHelpText([identifier], 'at-rule'),
   );
 };
 
@@ -185,15 +190,14 @@ const atRuleIdentifierOption = opts => {
  * @param {Object} opts - Feature options
  * @param {String} opts.name - The name of the option
  * @param {String} opts.group - The group the option belongs to
- * @param {String} opts.help - The help text for the option
  * @param {[String]} opts.functionNames - The function names that can be disabled
  */
-const functionNameOption = opts => {
+const functionNameOption = ({name, group, functionNames}) => {
   return option(
-    opts.name,
-    opts.group,
-    functionName(opts.functionNames),
-    createHelpFromProperties(opts.functionNames, 'function', 'functions'),
+    name,
+    group,
+    functionName(functionNames),
+    createHelpText(functionNames, 'function'),
   );
 };
 
@@ -205,14 +209,14 @@ const functionNameOption = opts => {
  * @param {Object} opts - Feature options
  * @param {String} opts.name - The name of the option
  * @param {String} opts.group - The group the option belongs to
- * @param {String} opts.help - The help text for the option
- * @param {[String]} opts.functionNames - The features names that can be disabled
+ * @param {[String]} opts.featureNames - The features names that can be disabled
  */
-const mediaFeatureOption = opts => {
-  return option(opts.name,
-    opts.group,
-    mediaFeature(opts.featureNames),
-    opts.help
+const mediaFeatureOption = ({name, group, featureNames}) => {
+  return option(
+    name,
+    group,
+    mediaFeature(featureNames),
+    createHelpText(featureNames, 'media feature'),
   )
 };
 
