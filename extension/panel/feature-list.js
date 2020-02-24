@@ -16,6 +16,7 @@ import columns from './features/columns.js';
 import animations from './features/animations.js';
 import fonts from './features/fonts.js';
 import scrollBehavior from './features/scroll-behavior.js';
+import conicGradient from './features/conic-gradient.js';
 
 export default [
   grid,
@@ -35,5 +36,6 @@ export default [
   animations,
   columns,
   fonts,
-  scrollBehavior
+  scrollBehavior,
+  conicGradient
 ];
