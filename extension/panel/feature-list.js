@@ -15,6 +15,7 @@ import transitions from './features/transitions.js';
 import columns from './features/columns.js';
 import animations from './features/animations.js';
 import fonts from './features/fonts.js';
+import scrollBehavior from './features/scroll-behavior.js';
 
 export default [
   grid,
@@ -33,5 +34,6 @@ export default [
   transitions,
   animations,
   columns,
-  fonts
+  fonts,
+  scrollBehavior
 ];
