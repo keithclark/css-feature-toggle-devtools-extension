@@ -14,6 +14,8 @@ const containerOptions = document.getElementById('optionsContainer');
 
 
 /**
+let paused = false;
+
  * Applies the extension settings to any documents in the currently inspected
  * window.
  */
@@ -156,7 +158,29 @@ const createOptions = () => {
  * Refreshes the UI with the current theme
  */
 const updateTheme = () => {
-  document.body.classList.add(`theme--${browser.devtools.panels.themeName}`);
+  document.documentElement.classList.add(`theme--${browser.devtools.panels.themeName}`);
+}
+
+/**
+ * Reset all extension options
+ */
+const resetOptions = () => {
+  if (!allFeaturesEnabled()) {
+    document.querySelectorAll('.optionGroup__options input').forEach(elem => elem.checked = false);
+    features.forEach(feature => feature.disabled = false);
+    browser.devtools.inspectedWindow.onResourceAdded.removeListener(resourceAddedListener);
+    updateInspectedWindow();
+  }
+}
+
+/**
+ * Pause the extension
+ */
+const pause = () => {
+  paused = !paused;
+  document.getElementById('pause').classList.toggle('button--active', paused);
+  document.querySelectorAll('.optionGroup__options input').forEach(elem => elem.disabled = paused);
+  updateInspectedWindow();
 }
 
 
@@ -197,3 +221,22 @@ const init = () => {
 
 
 init();
+
+  // Reset options button
+  document.getElementById('reset').addEventListener('click', resetOptions);
+
+  // Reset options button
+  document.getElementById('pause').addEventListener('click', pause);
+
+
+  // Mimic the keyboard-only focus hilighting used in Chrome devtools
+  document.addEventListener('keydown', e => {
+    if (e.keyCode === 9) {
+      document.documentElement.classList.add('keyboard-focus');
+    }
+  });
+
+  document.addEventListener('mousedown', e => {
+    document.documentElement.classList.remove('keyboard-focus');
+  });
+

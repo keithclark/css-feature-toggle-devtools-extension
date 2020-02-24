@@ -8,9 +8,16 @@
 </head>
 <body>
   <div class="container">
-    <div class="container__header">
-      <img src="../icons/icon-48.png" width="40">
-      <span class="u-txt-l">CSS Feature Toggles</span>
+
+    <div class="container__tools">
+      <div class="toolbar">
+        <button title="Reset all options" id="reset" class="button button--toolbar">
+          <svg width="14" height="14"><path d="M7.5 1a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13zm0 11c.8 0 1.6-.3 2.3-.8L3.6 5.2a4.5 4.5 0 0 0 3.8 6.8zm4.4-4.6A4.5 4.5 0 0 0 5 3.6l6.3 6.2c.4-.7.6-1.5.6-2.4z"/></svg>
+        </button>
+        <button title="Pause extension" id="pause" class="button button--toolbar">
+          <svg width="14" height="14"><path d="M10 1l4 4v4.9L10 14H5l-4-4V5l4-4h5zm0 9V5H8v5h2zm-3 0V5H5v5h2z" fill-rule="evenodd"/></svg>
+        </button>
+      </div>
     </div>
     <div class="container__body">
       <div class="optionGroupList" id="optionsContainer"></div>
