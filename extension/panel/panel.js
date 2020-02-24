@@ -85,7 +85,7 @@ const updateDocumentStyleElements = async resource => {
  */
 const updateCssText = cssText => {
   features.forEach(feature => {
-    if (feature.disabled) {
+    if (!paused && feature.disabled) {
       cssText = feature.disable(cssText);
     } else {
       cssText = feature.enable(cssText);
