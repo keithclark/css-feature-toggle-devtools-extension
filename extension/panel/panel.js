@@ -2,7 +2,9 @@ import {
   getStylesheets,
   getDocuments,
   getStyleElementStyles,
-  setStyleElementStyles
+  setStyleElementStyles,
+  saveState,
+  loadState
 } from './resource-helpers.js';
 import {encodeCssText} from './utils.js';
 import features from './feature-list.js';
@@ -63,7 +65,7 @@ const updateDocumentStylesheet = resource => {
       }
     });
   });
-}
+};
 
 
 /**
@@ -109,8 +111,9 @@ const createOptions = () => {
   let optionGroups = {};
 
   features.forEach((feature, i) => {
+    feature.id = i;
     let optionTemplate = document.importNode(optionsTemplate.content, true);
-    let id = `feature-${i}`;
+    let id = `feature-${feature.id}`;
     let inputElem = optionTemplate.querySelector('input');
     let labelElem = optionTemplate.querySelector('label');
     let nameElem = optionTemplate.querySelector('.option__name');
@@ -135,9 +138,8 @@ const createOptions = () => {
       }
 
       updateInspectedWindow();
-
+      saveExtensionState();
     });
-
 
     if (!optionGroups[group]) {
       let optionGroupTemplate = document.importNode(optionGroupsTemplate.content, true);
@@ -200,6 +202,33 @@ const resourceAddedListener = resource => {
 
 
 /**
+ * Save the extension state in the top-level window so that it can be restored
+ * if the user closes and then re-opens devtools without reloading the document.
+ */
+const saveExtensionState = async() => {
+  let documents = await getDocuments();
+  let toggles = features.filter(feature => feature.disabled).map(feature => feature.id);
+  saveState('ui', toggles, documents[0]);
+}
+
+
+/**
+ * Load the extension state from the top-level window and restore the UI.
+ */
+const loadExtensionState = async() => {
+  let documents = await getDocuments();
+  let state = await loadState('ui', documents[0]);
+  if (!state) {
+    return;
+  }
+  state.forEach(i => {
+    features[i].disabled = true;
+    document.getElementById(`feature-${i}`).checked = true;
+  });
+}
+
+
+/**
  * Initialise the extension
  */
 const init = () => {
@@ -217,10 +246,6 @@ const init = () => {
   if ('onResourceAdded' in browser.devtools.inspectedWindow) {
     createOptions();
   }
-}
-
-
-init();
 
   // Reset options button
   document.getElementById('reset').addEventListener('click', resetOptions);
@@ -240,3 +265,9 @@ init();
     document.documentElement.classList.remove('keyboard-focus');
   });
 
+  loadExtensionState();
+
+}
+
+
+init();
