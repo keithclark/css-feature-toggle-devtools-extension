@@ -13,9 +13,9 @@ const optionGroupsTemplate = document.getElementById('optionGroup');
 const containerOptions = document.getElementById('optionsContainer');
 
 
-/**
 let paused = false;
 
+/**
  * Applies the extension settings to any documents in the currently inspected
  * window.
  */
@@ -68,7 +68,7 @@ const updateDocumentStylesheet = resource => {
 
 /**
  * Updates <style> elements of a document resource.
- * 
+ *
  * @param {Resource} resource
  */
 const updateDocumentStyleElements = async resource => {
