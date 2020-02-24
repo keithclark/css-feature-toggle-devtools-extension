@@ -16,7 +16,7 @@ const replacer = (disableRegEx, enableRegEx) => ({
 
 /**
  * Create a property name replacer
- * 
+ *
  * @param {*} names - The property name to toggle
  */
 const propertyName = names => {
@@ -98,6 +98,26 @@ const option = (name, group, toggle, help) => ({
 
 
 /**
+ * Helper for creating a help text snippet that lists properties
+ *
+ * @param {*} props
+ * @param {*} singular
+ * @param {*} plural
+ */
+const createHelpFromProperties = (props, singular, plural, suffix = '') => {
+  let standardsProps = props.filter(prop => !prop.startsWith('-'));
+  let text = ['Disable'];
+  if (standardsProps.length > 1) {
+    text.push(`${plural} '${standardsProps.slice(0, -1).join("', '")}' and '${standardsProps.slice(-1)}'`);
+  } else {
+    text.push(`the '${standardsProps[0]}' ${singular}`);
+  }
+  text.push(suffix);
+  return text.join(' ')
+}
+
+
+/**
  * Helper for creating a feature toggle based one or more CSS property names.
  * i.e. `transform` or `clip-path`
  *
@@ -112,7 +132,7 @@ const propertyNameOption = opts => {
     opts.name,
     opts.group,
     propertyName(opts.propertyNames),
-    opts.help
+    createHelpFromProperties(opts.propertyNames, 'property', 'properties'),
   );
 };
 
@@ -127,14 +147,13 @@ const propertyNameOption = opts => {
  * @param {String} opts.help - The help text for the option
  * @param {String} opts.propertyName - The property these values apply to
  * @param {[String]} opts.propertyValues - The values that can be disabled
- * 
  */
 const propertyValueOption = opts => {
   return option(
     opts.name,
     opts.group,
     propertyValue(opts.propertyName, opts.propertyValues),
-    opts.help
+    createHelpFromProperties(opts.propertyValues, 'value', 'values', `of the '${opts.propertyName}' property`),
   );
 };
 
@@ -154,7 +173,7 @@ const atRuleIdentifierOption = opts => {
     opts.name,
     opts.group,
     atRuleIdentifier(opts.identifier),
-    opts.help
+    createHelpFromProperties([opts.identifier], 'at-rule', 'at-rules'),
   );
 };
 
@@ -174,7 +193,7 @@ const functionNameOption = opts => {
     opts.name,
     opts.group,
     functionName(opts.functionNames),
-    opts.help
+    createHelpFromProperties(opts.functionNames, 'function', 'functions'),
   );
 };
 
