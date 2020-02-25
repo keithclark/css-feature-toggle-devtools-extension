@@ -5,6 +5,7 @@ import sticky from './features/sticky.js';
 import transforms from './features/transforms.js';
 import supports from './features/supports.js';
 import compositing from './features/compositing.js';
+import filters from './features/filters.js';
 import clipPath from './features/clip-path.js';
 import masking from './features/masking.js';
 import shape from './features/shape.js';
@@ -16,6 +17,7 @@ import columns from './features/columns.js';
 import animations from './features/animations.js';
 import fonts from './features/fonts.js';
 import scrollBehavior from './features/scroll-behavior.js';
+import scrollSnap from './features/scroll-snap.js';
 import conicGradient from './features/conic-gradient.js';
 import reducedMotion from './features/prefers-reduced-motion.js';
 
@@ -26,6 +28,7 @@ export default [
   sticky,
   transforms,
   compositing,
+  filters,
   clipPath,
   masking,
   shape,
@@ -38,6 +41,7 @@ export default [
   columns,
   fonts,
   scrollBehavior,
+  scrollSnap,
   conicGradient,
   reducedMotion
 ];
