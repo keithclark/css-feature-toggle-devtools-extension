@@ -20,6 +20,7 @@ import scrollBehavior from './features/scroll-behavior.js';
 import scrollSnap from './features/scroll-snap.js';
 import conicGradient from './features/conic-gradient.js';
 import reducedMotion from './features/prefers-reduced-motion.js';
+import writingMode from './features/writing-mode.js';
 
 export default [
   grid,
@@ -43,5 +44,6 @@ export default [
   scrollBehavior,
   scrollSnap,
   conicGradient,
-  reducedMotion
+  reducedMotion,
+  writingMode,
 ];
