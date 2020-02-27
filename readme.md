@@ -6,31 +6,7 @@ Available for Chrome via the [Chrome Web Store](https://chrome.google.com/websto
 
 ![Screengrab of the CSS Feature Toggle extension](screengrab.png)
 
-## Supported features
-
-* **Box Layout**
-  * Grid layout — *Disable support for the grid layout model*
-  * Flexbox layout — *Disable support for the flexible box layout model*
-  * Box model sizing — *Disable support for the `box-sizing` property*
-  * Sticky positioning — *Disable support for `position: sticky`*
-  * Multi-column layout — *Disable support for columns*
-* **Visual Rendering**
-  * Transforms — *Disable support for 2D and 3D transforms*
-  * Compositing and blending — *Disable background and content blending modes*
-  * Clipping paths — *Disable region clipping via `clip-path`*
-  * Masking — *Disable masking via `mask` and `mask-image`*
-  * Transitions — *Disable support for transitions*
-  * Animations — *Disable support for animations*
-* **Content Layout**
-  * Shapes — *Disable support for `shape-inside` and `shape-outside`*
-  * Object sizing — *Disable support for the `object-fit` property*
-* **Other**
-  * Feature detection — *Disable `@supports` feature detection*
-  * Custom properties — *Disable support for the `var()` function*
-  * Mathematical expressions — *Disable support for the `calc()` function*
-  * Custom fonts — *Disable loading of custom fonts with `@font-face`*
-
-## Supported browsers 
+## Supported browsers
 
 * Chrome — installable via [Chrome Web Store](https://chrome.google.com/webstore/detail/css-feature-toggles/aeinmfddnniiloadoappmdnffcbffnjg)
 * Opera
