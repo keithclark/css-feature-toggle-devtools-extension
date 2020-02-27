@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "CSS Feature Toggles",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Keith Clark",
   "description": "A devtools extension to toggle support of selected CSS features for testing progressive enhancement fallbacks.",
   "homepage_url": "https://github.com/keithclark/css-feature-toggle-devtools-extension",
