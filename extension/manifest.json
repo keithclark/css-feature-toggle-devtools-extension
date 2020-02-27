@@ -8,8 +8,5 @@
   "icons": {
     "48": "icons/icon-48.png"
   },
-  "permissions": [
-    "tabs"
-  ],
   "devtools_page": "devtools/devtools.html"
 }
