@@ -10,6 +10,7 @@ Available for Chrome via the [Chrome Web Store](https://chrome.google.com/websto
 
 * Chrome — installable via [Chrome Web Store](https://chrome.google.com/webstore/detail/css-feature-toggles/aeinmfddnniiloadoappmdnffcbffnjg)
 * Opera
+* Edge (Chromium)
 
 This extension uses devtools API features that aren't supported in Firefox yet:
 
