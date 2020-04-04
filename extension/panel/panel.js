@@ -160,7 +160,13 @@ const createOptions = () => {
  * Refreshes the UI with the current theme
  */
 const updateTheme = () => {
-  document.documentElement.classList.add(`theme--${browser.devtools.panels.themeName}`);
+  let classList = document.documentElement.classList;
+  classList.forEach(className => {
+    if (className.startsWith('theme--')) {
+      classList.remove(className);
+    }
+  });
+  classList.add(`theme--${browser.devtools.panels.themeName}`);
 }
 
 
