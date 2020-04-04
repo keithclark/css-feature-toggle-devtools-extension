@@ -11,13 +11,8 @@ Available for Chrome via the [Chrome Web Store](https://chrome.google.com/websto
 * Chrome — installable via [Chrome Web Store](https://chrome.google.com/webstore/detail/css-feature-toggles/aeinmfddnniiloadoappmdnffcbffnjg)
 * Opera
 * Edge (Chromium)
+* Firefox - See limitations
 
-This extension uses devtools API features that aren't supported in Firefox yet:
-
-  * `devtools.inspectedWindow.getResources()`
-  * `devtools.inspectedWindow.onResourceAdded`
-  * `resource.getContent()`
-  * `resource.setContent()`
 
 ## Limitations
 
@@ -26,16 +21,39 @@ Toggling CSS features isn't supported everywhere *yet* so you should be aware of
 * Inline styles (`<div style="...">`) will not be disabled.
 * Changes made to a stylesheet via the CSSOM will not be disabled.
 
+### Firefox
+
+This extension uses API features that aren't yet supported in Firefox Developer Tools. There is [a ticket to add the missing API methods](https://bugzilla.mozilla.org/show_bug.cgi?id=1361121) but there is no active development on it. Therefore, to allow developers to use this extension in Firefox, I've had to implement (polyfill) the following devtools API methods directly in the extension:
+
+  * `devtools.inspectedWindow.getResources()`
+  * `devtools.inspectedWindow.onResourceAdded`
+  * `resource.getContent()`
+  * `resource.setContent()`
+
+These methods attempt to mirror the Chromium behaviour but are not a 1:1 map because DOM APIs don't give access to raw content and tend to strip out invalid data at parse time. This means that the extension will work but you should be aware of the following limitations in Firefox:
+
+  * Only the top level document will be affected. Content in iframes won't be toggled.
+  * Only stylesheets from the same origin as the document can be feature toggled.
+  * Toggling CSS features _and_ changing styles in the CSS inspector will cause conflicts because of polyfill caching. If you get into a mess close devtools, reload the page and re-open.
+
 ---
 
 # Contributing
 
-## Installing for development
-
 1. Clone this repo.
-2. Start Chrome, open the **Extensions** manager and enable **Developer Mode**.
-3. Click **Load unpacked extension** and select the repo folder (the one containing `manifest.json`)
-4. Open devtools and click the **CSS Features** tab to use the extension.
+
+## Installing extension in Chrome for development
+
+1. Start Chrome, open the **Extensions** manager and enable **Developer Mode**.
+2. Click **Load unpacked extension** and select the repo folder (the one containing `manifest.json`)
+3. Open devtools and click the **CSS Features** tab to use the extension.
+
+## Installing extension in Firefox for development
+
+1. Start Firefox, browse to "about:debugging" and click **"This Firefox"**.
+2. Click **Load Temporary Add-on** and select the `manifest.json` in the repo folder.
+3. Open devtools and click the **CSS Features** tab to use the extension.
+
 
 ## Making code changes
 
