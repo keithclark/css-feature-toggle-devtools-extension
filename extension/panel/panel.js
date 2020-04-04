@@ -261,10 +261,13 @@ const init = () => {
     browser.devtools.panels.onThemeChanged.addListener(updateTheme);
   }
 
-  // Firefox 64 doesn't support the `onResourceAdded` event so we can't start
-  // the extension.
-  if ('onResourceAdded' in browser.devtools.inspectedWindow) {
-    createOptions();
+  // The host must support the `onResourceAdded` event and the `getResources`
+  // method - without it the extension won't start.
+  if (!(
+    'onResourceAdded' in browser.devtools.inspectedWindow &&
+    'getResources' in browser.devtools.inspectedWindow
+  )) {
+      return false;
   }
 
   // Reset options button
