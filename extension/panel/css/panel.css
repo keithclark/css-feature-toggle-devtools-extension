@@ -1,31 +1,31 @@
+:root {
+  --spacing-unit: .5rem;
+}
 * {
   box-sizing: border-box;
 }
+html,body {
+  margin: 0;
+  padding: 0;
+}
 html {
+  font: var(--font);
   background: var(--root-bg-color);
   color: var(--root-fg-color);
 }
 body {
-  margin: 0;
-  padding: 0;
   height: 100vh;
 }
-
-.u-txt-l {
-  font-size: 200%;
-}
-.u-txt-m {
-  font-size: 125%;
-}
-.u-txt-faded {
-  color: #777;
-}
-.u-inset {
-  padding: var(--spacing-unit);
+main {
+  font-size:13px;
 }
 
+
+/* Option
+------------------------------------------------ */
 .option {
   display: flex;
+  align-items: flex-start
 }
 
 .option + .option {
@@ -42,14 +42,22 @@ body {
   display: block;
 }
 
+
+/* optionGroup - a collection of options
+------------------------------------------------ */
 .optionGroup {
-  margin-right: calc(var(--spacing-unit) * 4);
-  -webkit-column-break-inside: avoid;
-  column-break-inside: avoid;
-}
-.optionGroup:not(:last-child) {
+  break-inside: avoid-column;
   margin-bottom: calc(var(--spacing-unit) * 4);
 }
+
+/* emulate avoid-column */
+@supports not (break-inside: avoid-column) {
+  .optionGroup  {
+    display: inline-grid;
+    page-break-inside: avoid;
+  }
+}
+
 .optionGroup__options {
   margin-top: calc(var(--spacing-unit) * 2);
   margin-left: var(--spacing-unit);
@@ -57,8 +65,12 @@ body {
 
 .optionGroupList {
   column-width: 308px;
+  column-gap: calc(var(--spacing-unit) * 2);
 }
 
+
+/* Container
+------------------------------------------------ */
 .container {
   height: 100vh;
   display: flex;
@@ -71,4 +83,88 @@ body {
 }
 
 
+/* Toolbars
+------------------------------------------------ */
+ .toolbar {
+  display: flex;
+  align-items: center;
+  padding: var(--toolbar-spacing);
+  background: var(--toolbar-bg-color);
+  border-bottom: 1px solid var(--divider-color);
+}
+.toolbar > *:not(:last-child) {
+  margin-right: var(--toolbar-item-gap);
+}
 
+
+/* Buttons
+------------------------------------------------ */
+ .button {
+  border: none;
+  background: transparent;
+  color: inherit;
+  user-select: none;
+}
+
+
+/* Toolbar buttons
+------------------------------------------------ */
+ .button--toolbar {
+  white-space: nowrap;
+  overflow: hidden;
+  background-color: transparent;
+  border: none;
+  outline-width: 0;
+  padding: 0;
+}
+
+.button--toolbar::before {
+  filter: var(--toolbar-button-filter);
+  background-position: 50% 50%;
+  display: inline-block;
+  width: var(--icon-width);
+  height: var(--icon-height);
+  padding: var(--icon-spacing);
+}
+
+.button--toolbar:hover::before {
+  filter: var(--toolbar-button-filter-hover);
+}
+.button--toolbar.button--active::before {
+  filter: var(--toolbar-button-filter-active);
+}
+
+
+/* Specific button icons
+------------------------------------------------ */
+#pause::before {
+  content: var(--icon-pause);
+}
+
+#reset::before {
+  content: var(--icon-reset);
+}
+
+
+/* Checkboxes
+------------------------------------------------ */
+.option__checkbox {
+  filter: var(--toolbar-checkbox-filter);
+}
+
+
+/* utils
+------------------------------------------------ */
+
+.u-txt-l {
+  font-size: 200%;
+}
+.u-txt-m {
+  font-size: 125%;
+}
+.u-txt-faded {
+  color: #777;
+}
+.u-inset {
+  padding: var(--spacing-unit);
+}

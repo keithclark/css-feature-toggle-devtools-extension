@@ -1,101 +1,66 @@
+/* Settings
+------------------------------------------------ */
 :root {
+  --icon-pause: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cpath d='M10 1l4 4v4.9L10 14H5l-4-4V5l4-4h5zm0 9V5H8v5h2zm-3 0V5H5v5h2z' fill-rule='evenodd'/%3E%3C/svg%3E");
+  --icon-reset: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cpath d='M7.5 1a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13zm0 11c.8 0 1.6-.3 2.3-.8L3.6 5.2a4.5 4.5 0 0 0 3.8 6.8zm4.4-4.6A4.5 4.5 0 0 0 5 3.6l6.3 6.2c.4-.7.6-1.5.6-2.4z'/%3E%3C/svg%3E");
+  --icon-width: 18px;
+  --icon-height: 16px;
+  --icon-spacing: 6px 5px 4px 5px;
+
+  --toolbar-spacing: 0 2px;
+  --toolbar-item-gap: 0px;
+}
+
+
+/* Light theme
+------------------------------------------------ */
+:root.theme--default {
   --root-fg-color: rgb(48, 57, 66);
   --root-bg-color: #fff;
   --toolbar-bg-color: #f3f3f3;
-  --toolbar-focus-color: rgb(224, 224, 224);
+  --toolbar-bg-color-hover: rgb(224, 224, 224);
   --divider-color: #d0d0d0;
-  --spacing-unit: .5rem;
+
+  --toolbar-button-filter: invert(45%);
+  --toolbar-button-filter-hover: none;
+  --toolbar-button-filter-active: invert(38%) sepia(28%) saturate(3971%) hue-rotate(199deg) brightness(91%) contrast(101%);
+
+  --toolbar-checkbox-filter: none;
 }
 
+
+/* Dark theme
+------------------------------------------------ */
 :root.theme--dark {
   --root-fg-color: rgb(189, 198, 207);
   --root-bg-color: rgb(36, 36, 36);
   --toolbar-bg-color: #333;
-  --toolbar-focus-color: rgb(67, 67, 67);
+  --toolbar-bg-color-hover: rgb(67, 67, 67);
   --divider-color: #525252;
+
+  --toolbar-button-filter: invert(55%);
+  --toolbar-button-filter-hover: invert(75%);
+  --toolbar-button-filter-active: invert(25%) sepia(93%) saturate(1320%) hue-rotate(182deg) brightness(91%) contrast(89%);
+
+  --toolbar-checkbox-filter: invert(80%);
 }
 
 
-/**
- * buttons
- */
-.button {
-  border: none;
-  background: transparent;
-  color: inherit;
-  user-select: none;
-}
-
-.button--toolbar {
+/* Overrides
+------------------------------------------------ */
+:root.keyboard-focus .button--toolbar:focus::after {
+  content: '';
+  position: absolute;
+  margin-left: -26px;
+  margin-top: 2px;
+  width: 24px;
+  height: 22px;
+  background: #ff000080;
+  background-color: var(--toolbar-bg-color-hover);
   border-radius: 2px;
-  white-space: nowrap;
-  overflow: hidden;
-  background: transparent;
-  border: none;
-  padding: 4px 5px;
-  outline-width: 0;
 }
 
-.button--toolbar svg {
-  width: 14px;
-  display: block;
-  filter: invert(.45);
-}
-
-.button--active svg {
-  fill: #1a73e8;
-  filter: none;
-}
-
-.button--toolbar:hover svg {
-  filter: none;
-}
-
-:root.keyboard-focus .button--toolbar:focus {
-  background-color: var(--toolbar-focus-color)
-}
-
-:root.theme--dark .button--toolbar svg {
-  filter: invert(.55);
-}
-:root.theme--dark .button--toolbar:hover svg {
-  filter: invert(.75);
-}
-:root.theme--dark .button--active svg {
-  filter: invert(1);
-
-}
-
-/**
- * inputs
- */
-:root.theme--dark .option__checkbox {
-  filter: invert(80%);
-}
-
-
-/**
- * toolbars
- */
-.toolbar {
-  display: flex;
-  align-items: center;
-  padding: 2px 3px;
-  background: var(--toolbar-bg-color);
-  border-bottom: 1px solid var(--divider-color);
-}
-
-.toolbar > *:not(:first-child) {
-  margin-left: 5px;
-}
-
-.toolbar__separator {
-  background-color: #ccc;
-  width: 1px;
-  height: 16px;
-  display: inline-block;
-}
-
-:root.theme--dark .toolbar__separator {
-  background-color: rgb(61, 61, 61);
+:root.keyboard-focus .button--toolbar:focus::before {
+  position: relative;
+  z-index: 1;
 }
