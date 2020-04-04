@@ -253,6 +253,7 @@ const loadExtensionState = async() => {
  */
 const init = () => {
 
+  // Set the theme
   updateTheme();
 
   // Chrome 71 doesn't support the `onThemeChanged` event as it restarts devtools
@@ -270,23 +271,15 @@ const init = () => {
       return false;
   }
 
+  // Add the options to the UI
+  createOptions();
+
   // Reset options button
   document.getElementById('reset').addEventListener('click', resetOptions);
 
   // Reset options button
   document.getElementById('pause').addEventListener('click', pause);
 
-
-  // Mimic the keyboard-only focus hilighting used in Chrome devtools
-  document.addEventListener('keydown', e => {
-    if (e.keyCode === 9) {
-      document.documentElement.classList.add('keyboard-focus');
-    }
-  });
-
-  document.addEventListener('mousedown', e => {
-    document.documentElement.classList.remove('keyboard-focus');
-  });
 
   loadExtensionState();
 

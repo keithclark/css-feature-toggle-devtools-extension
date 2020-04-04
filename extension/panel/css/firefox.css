@@ -1,0 +1,64 @@
+/* Settings
+------------------------------------------------ */
+:root {
+  --font: 12px/1.2 '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande', sans-serif;
+
+  --icon-reset: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='context-fill' d='M6.5 12a.5.5 0 0 0 .5-.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 0 .5.5zm2 0a.5.5 0 0 0 .5-.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 0 .5.5zm2 0a.5.5 0 0 0 .5-.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 0 .5.5z'%3E%3C/path%3E%3Cpath fill='context-fill' d='M14 2h-3.05a2.5 2.5 0 0 0-4.9 0H3a1 1 0 0 0 0 2v9a3 3 0 0 0 3 3h5a3 3 0 0 0 3-3V4a1 1 0 0 0 0-2zM8.5 1a1.489 1.489 0 0 1 1.391 1H7.109A1.489 1.489 0 0 1 8.5 1zM12 13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4h7z'%3E%3C/path%3E%3C/svg%3E%0A");
+  --icon-pause: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg' fill='context-fill %230b0b0b'%3E%3Cpath d='M5 12.503l.052-9a.5.5 0 0 0-1-.006l-.052 9a.5.5 0 0 0 1 .006zM12 12.497l-.05-9A.488.488 0 0 0 11.474 3a.488.488 0 0 0-.473.503l.05 9a.488.488 0 0 0 .477.497.488.488 0 0 0 .473-.503z'/%3E%3C/svg%3E");
+  --icon-width: 16px;
+  --icon-height: 15px;
+  --icon-spacing: 2px 5px 0px 5px;
+
+  --toolbar-spacing: 2px 3px;
+  --toolbar-item-gap: 3px;
+}
+
+
+/* Light theme
+------------------------------------------------ */
+:root.theme--light {
+  --root-fg-color: #0c0c0d;;
+  --root-bg-color: #fff;
+  --toolbar-bg-color: #f9f9fa;
+  --divider-color: #e0e0e2;
+
+  --toolbar-button-filter: invert(25%);
+  --toolbar-button-filter-hover: invert(25%);
+  --toolbar-button-filter-active: invert(26%) sepia(76%) saturate(2279%) hue-rotate(203deg) brightness(91%) contrast(109%);
+}
+
+
+/* Dark theme
+------------------------------------------------ */
+:root.theme--dark {
+  --root-fg-color: rgb(189, 198, 207);
+  --root-bg-color: #232327;
+  --toolbar-bg-color: #18181a;
+  --toolbar-bg-color-hover: rgb(56, 56, 61);
+  --divider-color: #3C3C3D;
+
+  --toolbar-button-filter: invert(70%);
+  --toolbar-button-filter-hover: invert(70%);
+  --toolbar-button-filter-active: invert(82%) sepia(32%) saturate(5103%) hue-rotate(181deg) brightness(100%) contrast(102%);
+}
+
+
+/* Overrides
+------------------------------------------------ */
+.button--toolbar:not(.button--active):hover::after,
+.button--active:not(:hover)::after {
+  content: '';
+  position: absolute;
+  margin-left: -26px;
+  margin-top: 0px;
+  width: 27px;
+  height: 21px;
+  background-color: var(--toolbar-bg-color-hover);
+  border-radius: 2px;
+}
+
+.button--toolbar:not(.button--active):hover::before,
+.button--active:not(:hover)::before  {
+  position: relative;
+  z-index: 1;
+}
