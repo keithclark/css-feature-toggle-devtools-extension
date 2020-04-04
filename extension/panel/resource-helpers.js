@@ -12,7 +12,7 @@ import {
  */
 const getResourcesByType = resourceType => {
   return new Promise(resolve => {
-    chrome.devtools.inspectedWindow.getResources(resources => {
+    browser.devtools.inspectedWindow.getResources(resources => {
       resolve(resources.filter(resource => resource.type === resourceType));
     });
   });
@@ -41,26 +41,26 @@ export const getDocuments = () => getResourcesByType('document');
  * Evalulates a expression in a document.
  *
  * @param {string|function} expression - Expression or function to evaluate
- * @param {Resource} resource - Document to evaluate the expression in
+ * @param {Resource} [resource] - Document to evaluate the expression in
  * @returns {Promise} A promise that resolves with the expression result
  */
 export const evalInDocument = (expression, resource) => {
-  let options = {
-    frameURL: resource.url
-  };
+  let options = {};
+
+  if (resource) {
+    options.frameURL = resource.url;
+  }
 
   if (typeof expression === 'function') {
     expression = `(${expression})()`;
   }
 
-  return new Promise((resolve, reject) => {
-    chrome.devtools.inspectedWindow.eval(expression, options, (res, err) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(res);
-      }
-    });
+  return browser.devtools.inspectedWindow.eval(expression, options).then(([res,err]) => {
+    if (err) {
+      return Promise.reject(err);
+    } else {
+      return res
+    }
   });
 };
 
