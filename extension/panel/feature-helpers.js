@@ -90,6 +90,41 @@ const mediaFeature = names => {
 
 
 /**
+ * Create a CSS media feature replacer for a pseudo-class selector such as:
+ *
+ * p:empty
+ * div:focus-within
+ *
+ * @param {classes} names - The pseudo-classes to toggle
+ */
+const pseudoClass = classes => {
+  classes = classes.map(encodeRegExp).join('|');
+  return replacer(
+    new RegExp(`(:)(${classes})`, 'g'),
+    new RegExp(`(:)-disabled-(${classes})`, 'g')
+  );
+};
+
+
+/**
+ * Create a CSS media feature replacer a functional pseudo-class selector, such
+ * as:
+ *
+ * :is(h1, h2)
+ * :nth-child(4n)
+ *
+ * @param {classes} names - The functional pseudo-classes to toggle
+ */
+const functionalPseudoClass = classes => {
+  classes = classes.map(encodeRegExp).join('|');
+  return replacer(
+    new RegExp(`(:)(${classes})(?=\\()`, 'g'),
+    new RegExp(`(:)-disabled-(${classes})(?=\\()`, 'g')
+  );
+};
+
+
+/**
  * Returns a common option object
  *
  * @param {String} name - The name of the option
@@ -117,7 +152,7 @@ const createHelpText = (props, singular, plural = singular + 's') => {
   let standardsProps = props.filter(prop => !prop.startsWith('-'));
   let text = ['Disable'];
   if (standardsProps.length > 1) {
-    text.push(`${plural} '${standardsProps.slice(0, -1).join("', '")}' and '${standardsProps.slice(-1)}'`);
+    text.push(`the '${standardsProps.slice(0, -1).join("', '")}' and '${standardsProps.slice(-1)}' ${plural}`);
   } else {
     text.push(`the '${standardsProps[0]}' ${singular}`);
   }
@@ -221,10 +256,50 @@ const mediaFeatureOption = ({name, group, featureNames}) => {
 };
 
 
+/**
+ * Helper for creating a feature toggle based on one or more pseudo-classes.
+ * i.e `:empty` or `:last-child"
+ *
+ * @param {Object} opts - Feature options
+ * @param {String} opts.name - The name of the option
+ * @param {String} opts.group - The group the option belongs to
+ * @param {[String]} opts.pseudoClasses - The psuedo-classes to be toggled.
+ */
+const pseudoClassOption = ({name, group, pseudoClasses}) => {
+  return option(
+    name,
+    group,
+    pseudoClass(pseudoClasses),
+    createHelpText(pseudoClasses, 'pseudo-class', 'pseudo-classes'),
+  );
+};
+
+
+/**
+ * Helper for creating a feature toggle based on one or more functional
+ * pseudo-classes. i.e `:is(p, h1)` or `:nth-child(2)"
+ *
+ * @param {Object} opts - Feature options
+ * @param {String} opts.name - The name of the option
+ * @param {String} opts.group - The group the option belongs to
+ * @param {[String]} opts.pseudoClasses - The psuedo-classes to be toggled.
+ */
+const functionalPseudoClassOption = ({name, group, pseudoClasses}) => {
+  return option(
+    name,
+    group,
+    functionalPseudoClass(pseudoClasses),
+    createHelpText(pseudoClasses, 'functional pseudo-class', 'functional pseudo-classes'),
+  );
+};
+
+
 export {
   propertyNameOption,
   propertyValueOption,
   atRuleIdentifierOption,
   functionNameOption,
-  mediaFeatureOption
+  mediaFeatureOption,
+  pseudoClassOption,
+  functionalPseudoClassOption
 };

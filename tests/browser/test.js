@@ -37,7 +37,7 @@
 
   const addTest = config => {
     let groupName = config.group || "Other";
-    let id = `test-${config.name}`;
+    let id = `test-${config.name.replace(/:/g,'')}`;
     let groupElem = groups[groupName];
 
     let testElem = createTemplate(testTemplate, {

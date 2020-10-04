@@ -21,6 +21,14 @@ import scrollSnap from './features/scroll-snap.js';
 import conicGradient from './features/conic-gradient.js';
 import reducedMotion from './features/prefers-reduced-motion.js';
 import writingMode from './features/writing-mode.js';
+import focusWithin from './features/selectors/focus-within-pseudo.js';
+import isPseudo from './features/selectors/is-pseudo.js';
+import rangePseudo from './features/selectors/range-pseudo.js';
+import indeterminatePseudo from './features/selectors/indeterminate-pseudo.js';
+import validityPseudo from './features/selectors/validity-pseudo.js';
+import defaultPseudo from './features/selectors/default-pseudo.js';
+import requiredPseudo from './features/selectors/required-pseudo.js';
+import readonlyPseudo from './features/selectors/readonly-pseudo.js';
 
 export default [
   grid,
@@ -46,4 +54,12 @@ export default [
   conicGradient,
   reducedMotion,
   writingMode,
+  focusWithin,
+  isPseudo,
+  indeterminatePseudo,
+  rangePseudo,
+  validityPseudo,
+  requiredPseudo,
+  readonlyPseudo,
+  defaultPseudo,
 ];
