@@ -4,7 +4,7 @@
  */
 
 addTest({
-  name: ':in-range',
+  name: ':required',
   group: 'Selectors',
   html: `<input required>`,
   css: `<indicator-selector> input {
@@ -20,11 +20,10 @@ addTest({
 });
 
 addTest({
-  name: ':out-of-range',
+  name: ':optional',
   group: 'Selectors',
   html: `<input>`,
-  css: `
-  <indicator-selector> input {
+  css: `<indicator-selector> input {
     background: inherit;
     font-size:0;
     height:100%;
