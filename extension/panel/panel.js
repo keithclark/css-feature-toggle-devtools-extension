@@ -8,11 +8,13 @@ import {
 } from './resource-helpers.js';
 import {encodeCssText} from './utils.js';
 import features from './feature-list.js';
+import presets from './preset-list.js';
 
 
 const optionsTemplate = document.getElementById('option');
 const optionGroupsTemplate = document.getElementById('optionGroup');
 const containerOptions = document.getElementById('optionsContainer');
+const presetsElem = document.getElementById('presets')
 
 
 let paused = false;
@@ -111,9 +113,8 @@ const createOptions = () => {
   let optionGroups = {};
 
   features.forEach((feature, i) => {
-    feature.id = i;
     let optionTemplate = document.importNode(optionsTemplate.content, true);
-    let id = `feature-${feature.id}`;
+    const { id } = feature;
     let inputElem = optionTemplate.querySelector('input');
     let labelElem = optionTemplate.querySelector('label');
     let nameElem = optionTemplate.querySelector('.option__name');
@@ -137,6 +138,7 @@ const createOptions = () => {
         onResourceAdded.removeListener(resourceAddedListener);
       }
 
+      clearPreset();
       updateInspectedWindow();
       saveExtensionState();
     });
@@ -157,6 +159,28 @@ const createOptions = () => {
 
 
 /**
+ * Populates the preset selection element with grouped values
+ */
+const createPresets = () => {
+  const presetGroups = {};
+
+  presets.forEach((preset, index) => {
+    const presetOptionElem = document.createElement('option');
+    presetOptionElem.value = index;
+    presetOptionElem.textContent = preset.label;
+
+    if (!presetGroups[preset.group]) {
+      const presetGroupElem = document.createElement('optgroup');
+      presetGroupElem.setAttribute('label', preset.group);
+      presetGroups[preset.group] = presetGroupElem;
+      presetsElem.appendChild(presetGroupElem)
+    }
+    presetGroups[preset.group].appendChild(presetOptionElem);
+  });
+}
+
+
+/**
  * Refreshes the UI with the current theme
  */
 const updateTheme = () => {
@@ -170,7 +194,7 @@ const updateTheme = () => {
 const updateUI = () => {
   document.getElementById('pause').classList.toggle('button--active', paused);
   features.forEach(feature => {
-    let input = document.getElementById(`feature-${feature.id}`);
+    let input = document.getElementById(feature.id);
     input.checked = feature.disabled;
     input.disabled = paused;
   });
@@ -186,6 +210,7 @@ const resetOptions = () => {
     features.forEach(feature => feature.disabled = false);
     browser.devtools.inspectedWindow.onResourceAdded.removeListener(resourceAddedListener);
     updateInspectedWindow();
+    clearPreset();
   }
 }
 
@@ -196,6 +221,7 @@ const pause = () => {
   paused = !paused;
   updateUI();
   updateInspectedWindow();
+  saveExtensionState();
 }
 
 
@@ -221,7 +247,8 @@ const resourceAddedListener = resource => {
 const saveExtensionState = async() => {
   let documents = await getDocuments();
   let disabled = features.filter(feature => feature.disabled).map(feature => feature.id);
-  saveState('ui', {paused, disabled}, documents[0]);
+  let preset = presetsElem.value;
+  saveState('ui', {paused, disabled, preset}, documents[0]);
 }
 
 
@@ -234,12 +261,31 @@ const loadExtensionState = async() => {
   if (!state) {
     return;
   }
-  state.disabled.forEach(toggleId => {
-    features[toggleId].disabled = true;
-  });
+  presetsElem.value = state.preset;
   paused = state.paused;
+  setOptionState(state.disabled);
+}
+
+
+/**
+ * Applies a state to the UI.
+ *
+ * @param {*} state
+ */
+const setOptionState = options => {
+  features.forEach(feature => {
+    feature.disabled = options.includes(feature.id);
+  });
   updateUI();
 }
+
+
+/**
+ * Reset the currently selected preset
+ */
+const clearPreset = () => {
+  presetsElem.value = null;
+};
 
 
 /**
@@ -258,6 +304,7 @@ const init = () => {
   // Firefox 64 doesn't support the `onResourceAdded` event so we can't start
   // the extension.
   if ('onResourceAdded' in browser.devtools.inspectedWindow) {
+    createPresets();
     createOptions();
   }
 
@@ -277,6 +324,12 @@ const init = () => {
 
   document.addEventListener('mousedown', e => {
     document.documentElement.classList.remove('keyboard-focus');
+  });
+
+  presetsElem.addEventListener('change', () => {
+    setOptionState(presets[presetsElem.value].features);
+    saveExtensionState();
+    updateInspectedWindow();
   });
 
   loadExtensionState();

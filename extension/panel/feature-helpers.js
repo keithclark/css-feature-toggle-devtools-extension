@@ -1,4 +1,4 @@
-import {encodeRegExp} from './utils.js';
+import { encodeRegExp } from './utils.js';
 
 
 /**
@@ -132,7 +132,8 @@ const functionalPseudoClass = classes => {
  * @param {Object} toggle - The enable/disable toggle replacers
  * @param {String} help - The help text for the option
  */
-const option = (name, group, toggle, help) => ({
+const option = (id, name, group, toggle, help) => ({
+  id,
   name,
   group,
   help,
@@ -165,12 +166,14 @@ const createHelpText = (props, singular, plural = singular + 's') => {
  * i.e. `transform` or `clip-path`
  *
  * @param {Object} opts - Feature options
+ * @param {String} opts.id - The unique ID of the option
  * @param {String} opts.name - The name of the option
  * @param {String} opts.group - The group the option belongs to
  * @param {[String]} opts.propertyNames - The property names that can be disabled
  */
-const propertyNameOption = ({name, group, propertyNames}) => {
+const propertyNameOption = ({id, name, group, propertyNames}) => {
   return option(
+    id,
     name,
     group,
     propertyName(propertyNames),
@@ -184,13 +187,15 @@ const propertyNameOption = ({name, group, propertyNames}) => {
  * i.e `display: flex`
  *
  * @param {Object} opts - Feature options
+ * @param {String} opts.id - The unique ID of the option
  * @param {String} opts.name - The name of the option
  * @param {String} opts.group - The group the option belongs to
  * @param {String} opts.propertyName - The property these values apply to
  * @param {[String]} opts.propertyValues - The values that can be disabled
  */
-const propertyValueOption = ({name, group, propertyName, propertyValues}) => {
+const propertyValueOption = ({id, name, group, propertyName, propertyValues}) => {
   return option(
+    id,
     name,
     group,
     propertyValue(propertyName, propertyValues),
@@ -204,12 +209,14 @@ const propertyValueOption = ({name, group, propertyName, propertyValues}) => {
  * `@supports`
  *
  * @param {Object} opts - Feature options
+ * @param {String} opts.id - The unique ID of the option
  * @param {String} opts.name - The name of the option
  * @param {String} opts.group - The group the option belongs to
  * @param {String} opts.identifier - The at-rule identifier can be disabled
  */
-const atRuleIdentifierOption = ({name, group, identifier})  => {
+const atRuleIdentifierOption = ({id, name, group, identifier})  => {
   return option(
+    id,
     name,
     group,
     atRuleIdentifier(identifier),
@@ -223,12 +230,14 @@ const atRuleIdentifierOption = ({name, group, identifier})  => {
  * i.e. `calc()` or `linear-gradient()`
  *
  * @param {Object} opts - Feature options
+ * @param {String} opts.id - The unique ID of the option
  * @param {String} opts.name - The name of the option
  * @param {String} opts.group - The group the option belongs to
  * @param {[String]} opts.functionNames - The function names that can be disabled
  */
-const functionNameOption = ({name, group, functionNames}) => {
+const functionNameOption = ({id, name, group, functionNames}) => {
   return option(
+    id,
     name,
     group,
     functionName(functionNames),
@@ -242,12 +251,14 @@ const functionNameOption = ({name, group, functionNames}) => {
  * i.e. `(prefers-reduced-motion: reduce)` or `(pointer: any)`
  *
  * @param {Object} opts - Feature options
+ * @param {String} opts.id - The unique ID of the option
  * @param {String} opts.name - The name of the option
  * @param {String} opts.group - The group the option belongs to
  * @param {[String]} opts.featureNames - The features names that can be disabled
  */
-const mediaFeatureOption = ({name, group, featureNames}) => {
+const mediaFeatureOption = ({id, name, group, featureNames}) => {
   return option(
+    id,
     name,
     group,
     mediaFeature(featureNames),
@@ -261,12 +272,14 @@ const mediaFeatureOption = ({name, group, featureNames}) => {
  * i.e `:empty` or `:last-child"
  *
  * @param {Object} opts - Feature options
+ * @param {String} opts.id - The unique ID of the option
  * @param {String} opts.name - The name of the option
  * @param {String} opts.group - The group the option belongs to
  * @param {[String]} opts.pseudoClasses - The psuedo-classes to be toggled.
  */
-const pseudoClassOption = ({name, group, pseudoClasses}) => {
+const pseudoClassOption = ({id, name, group, pseudoClasses}) => {
   return option(
+    id,
     name,
     group,
     pseudoClass(pseudoClasses),
@@ -280,17 +293,34 @@ const pseudoClassOption = ({name, group, pseudoClasses}) => {
  * pseudo-classes. i.e `:is(p, h1)` or `:nth-child(2)"
  *
  * @param {Object} opts - Feature options
+ * @param {String} opts.id - The unique ID of the option
  * @param {String} opts.name - The name of the option
  * @param {String} opts.group - The group the option belongs to
  * @param {[String]} opts.pseudoClasses - The psuedo-classes to be toggled.
  */
-const functionalPseudoClassOption = ({name, group, pseudoClasses}) => {
+const functionalPseudoClassOption = ({id, name, group, pseudoClasses}) => {
   return option(
+    id,
     name,
     group,
     functionalPseudoClass(pseudoClasses),
     createHelpText(pseudoClasses, 'functional pseudo-class', 'functional pseudo-classes'),
   );
+};
+
+
+/**
+ * Applies a `group` property to a collection of options so they can be rendered
+ * together in the UI
+ *
+ * @param {string} name - The name of the group
+ * @param {Array} options - The options to add to the group
+ */
+const optionGroup = (name, options) => {
+  return options.map(option => {
+    option.group = name;
+    return option
+  });
 };
 
 
@@ -301,5 +331,6 @@ export {
   functionNameOption,
   mediaFeatureOption,
   pseudoClassOption,
-  functionalPseudoClassOption
+  functionalPseudoClassOption,
+  optionGroup
 };
