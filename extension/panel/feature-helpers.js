@@ -31,15 +31,15 @@ const propertyName = names => {
 /**
  * Create a property value replacer
  *
- * @param {*} name - The property name
- * @param {*} values - The values to toggle
+ * @param {Array<String>} names - The property name
+ * @param {Array<String>} values - The values to toggle
  */
-const propertyValue = (name, values) => {
-  name = encodeRegExp(name);
+const propertyValue = (names, values) => {
+  names = names.map(encodeRegExp).join('|');
   values = values.map(encodeRegExp).join('|');
   return replacer(
-    new RegExp(`([;({/\\s]${name}\\s*:\\s*)(${values})(?=[)}/;\\s])`, 'g'),
-    new RegExp(`([;({/\\s]${name}\\s*:\\s*)(?:-disabled-(${values}))(?=[)}/;\\s])`, 'g')
+    new RegExp(`([;({/\\s]${names}\\s*:\\s*)(${values})(?=[)}/;\\s])`, 'g'),
+    new RegExp(`([;({/\\s]${names}\\s*:\\s*)(?:-disabled-(${values}))(?=[)}/;\\s])`, 'g')
   );
 };
 
@@ -150,10 +150,23 @@ const option = (id, name, group, toggle, help) => ({
  * @param {*} plural
  */
 const createHelpText = (props, singular, plural = singular + 's') => {
+  return `Disable ${createHelpTextFragment(props, singular, plural)}`;
+}
+
+
+/**
+ * Helper for generating a human readable text fragment from a set of properties
+ *
+ * @param {Array<String>} props
+ * @param {string} singular - term used to describe a property if only one exists
+ * @param {string} plural - collective term used to describe multiple properties
+ */
+const createHelpTextFragment = (props, singular, plural = singular + 's') => {
   let standardsProps = props.filter(prop => !prop.startsWith('-'));
-  let text = ['Disable'];
+  let text = [];
   if (standardsProps.length > 1) {
-    text.push(`the '${standardsProps.slice(0, -1).join("', '")}' and '${standardsProps.slice(-1)}' ${plural}`);
+    text.push(`the '${standardsProps.slice(0, -1).join("', '")}'`);
+    text.push(`and '${standardsProps.slice(-1)}' ${plural}`);
   } else {
     text.push(`the '${standardsProps[0]}' ${singular}`);
   }
@@ -190,16 +203,16 @@ const propertyNameOption = ({id, name, group, propertyNames}) => {
  * @param {String} opts.id - The unique ID of the option
  * @param {String} opts.name - The name of the option
  * @param {String} opts.group - The group the option belongs to
- * @param {String} opts.propertyName - The property these values apply to
+ * @param {String|Array<String>} opts.propertyNames - The property these values apply to
  * @param {[String]} opts.propertyValues - The values that can be disabled
  */
-const propertyValueOption = ({id, name, group, propertyName, propertyValues}) => {
+const propertyValueOption = ({id, name, group, propertyNames, propertyValues}) => {
   return option(
     id,
     name,
     group,
-    propertyValue(propertyName, propertyValues),
-    createHelpText(propertyValues, 'value') + ` of the '${propertyName}' property`,
+    propertyValue(propertyNames, propertyValues),
+    `${createHelpText(propertyValues, 'value')} for ${createHelpTextFragment(propertyNames, 'property', 'properties')}`
   );
 };
 
