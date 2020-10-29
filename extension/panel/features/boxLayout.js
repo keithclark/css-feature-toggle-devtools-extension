@@ -9,21 +9,21 @@ export default optionGroup('Box Layout', [
   propertyValueOption({
     id: 'css-grid-level-1',
     name: 'Grid layout',
-    propertyName: 'display',
+    propertyNames: ['display'],
     propertyValues: ['grid', 'inline-grid']
   }),
 
   propertyValueOption({
     id: 'css-grid-level-2-subgrid',
     name: 'Subgrid layout',
-    propertyName: 'grid-template-columns',
+    propertyNames: ['grid-template-columns', 'grid-template-rows'],
     propertyValues: ['subgrid']
   }),
 
   propertyValueOption({
     id: 'css-flex-level-1',
     name: 'Flexbox layout',
-    propertyName: 'display',
+    propertyNames: ['display'],
     propertyValues: [
       'flex', 'inline-flex', '-webkit-flex', '-webkit-inline-flex',
       '-webkit-box', '-webkit-inline-box'
@@ -39,7 +39,7 @@ export default optionGroup('Box Layout', [
   propertyValueOption({
     id: 'positioned-layout-level-3-sticky',
     name: 'Sticky positioning',
-    propertyName: 'position',
+    propertyNames: ['position'],
     propertyValues: ['sticky', '-webkit-sticky']
   }),
 

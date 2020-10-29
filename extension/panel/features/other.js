@@ -3,7 +3,6 @@ import {
   atRuleIdentifierOption,
   propertyNameOption,
   functionNameOption,
-  mediaFeatureOption
 } from '../feature-helpers.js';
 
 export default optionGroup('Other', [
@@ -42,11 +41,6 @@ export default optionGroup('Other', [
     id: 'scroll-snapp-level-1#scroll-snap',
     name: 'Scroll snapping',
     propertyNames: ['scroll-snap-type', '-webkit-scroll-snap-type']
-  }),
-
-  mediaFeatureOption({
-    id: 'media-queries-level-5#prefers-reduced-motion',
-    name: 'Reduced motion',
-    featureNames: ['prefers-reduced-motion']
   })
+
 ]);
