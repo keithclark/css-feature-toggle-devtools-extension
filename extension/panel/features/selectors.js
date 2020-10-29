@@ -20,6 +20,12 @@ export default optionGroup('Selectors', [
   }),
 
   pseudoClassOption({
+    id: 'selectors-level-4-pseudo-class-focus-visible',
+    name: ':focus-visible',
+    pseudoClasses: ['focus-visible']
+  }),
+
+  pseudoClassOption({
     id: 'selectors-level-4-pseudo-class-indeterminate',
     name: ':indeterminate',
     pseudoClasses: ['indeterminate']
