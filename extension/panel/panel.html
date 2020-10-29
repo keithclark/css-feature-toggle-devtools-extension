@@ -13,7 +13,18 @@
       <div class="toolbar">
         <button title="Reset all options" id="reset" class="button button--toolbar"></button>
         <button title="Pause extension" id="pause" class="button button--toolbar"></button>
-        <label>Preset<select id="presets"></select></label>
+        <label hidden>Preset<select id="presets"></select></label>
+        <span class="toolbar__filler"></span>
+        <span class="toolbar__divider"></span>
+        <button title="Settings" id="settings" class="button button--toolbar"></button>
+      </div>
+    </div>
+    <div hidden class="container__settings" id="settingsMenu">
+      <div class="toolbar">
+        <span class="toolbar-checkbox">
+          <label for="showDescriptionsSetting">Show descriptions</label>
+          <input checked id="showDescriptionsSetting" class="checkbox" type="checkbox">
+        </span>
       </div>
     </div>
     <main class="container__body">
@@ -23,7 +34,7 @@
 
   <template id="option">
     <div class="option">
-      <input class="option__checkbox" id="" type="checkbox">
+      <input class="option__checkbox checkbox" id="" type="checkbox">
       <label class="option__label" for="">
         <span class="option__name"></span>
         <span class="option__help u-txt-faded"></span>
