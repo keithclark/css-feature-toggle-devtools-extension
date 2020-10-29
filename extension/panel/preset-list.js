@@ -1,25 +1,20 @@
-import ie10 from './presets/browsers/ie10.js'
-import ie11 from './presets/browsers/ie11.js'
+export default [];
+/*
 
-import css2_1 from './presets/css-levels/css2.1.js'
-import css3 from './presets/css-levels/css3.js'
-
+const presetA [
+  'css-grid-level-2',
+  'css-flex-level-1',
+  'sizing-level-3-box-sizing',
+  'positioned-layout-level-3-sticky',
+  'css-multi-columns-level-1'
+];
 
 export default [
   {
     label: 'IE10',
     group: 'Browsers',
-    features: ie10
-  },
-  ie11,
-  {
-    label: 'CSS 2.1',
-    group: 'CSS Levels',
-    features: css2_1
-  },
-  {
-    label: 'CSS 3',
-    group: 'CSS Levels',
-    features: css3
+    features: presetA
   }
 ];
+
+*/
