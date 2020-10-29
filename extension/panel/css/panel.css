@@ -9,11 +9,11 @@ html,body {
   padding: 0;
 }
 html {
-  font: var(--font);
   background: var(--root-bg-color);
   color: var(--root-fg-color);
 }
 body {
+  font: var(--font);
   height: 100vh;
 }
 main {
@@ -67,7 +67,9 @@ main {
   column-width: 308px;
   column-gap: calc(var(--spacing-unit) * 2);
 }
-
+:root.hide-descriptions .option__help {
+  display:none;
+}
 
 /* Container
 ------------------------------------------------ */
@@ -92,7 +94,16 @@ main {
   background: var(--toolbar-bg-color);
   border-bottom: 1px solid var(--divider-color);
 }
-.toolbar > *:not(:last-child) {
+.toolbar__filler {
+  flex: 1
+}
+.toolbar__divider {
+  width: 1px;
+  margin: 5px 4px;
+  height: 16px;
+  border-left: 1px solid var(--toolbar-divider-color);
+}
+.toolbar > *:not(:last-child):not(.toolbar__divider) {
   margin-right: var(--toolbar-item-gap);
 }
 
@@ -135,6 +146,7 @@ main {
 }
 
 
+
 /* Specific button icons
 ------------------------------------------------ */
 #pause::before {
@@ -145,13 +157,43 @@ main {
   content: var(--icon-reset);
 }
 
+#settings::before {
+  content: var(--icon-settings);
+}
 
 /* Checkboxes
 ------------------------------------------------ */
-.option__checkbox {
+.checkbox {
   filter: var(--toolbar-checkbox-filter);
+  height: 12px;
+  width: 12px;
+  flex-shrink: 0;
 }
 
+
+/* Checkboxes (toolbar)
+------------------------------------------------ */
+.toolbar-checkbox {
+  display: flex;
+  align-items: center;
+  padding: 4px 2px;
+}
+
+.toolbar-checkbox label {
+  order: 1;
+  margin-left: 3px;
+  margin-right: 3px;
+  color: var(--toolbar-link-color);
+  user-select: none;
+}
+
+.toolbar-checkbox label:hover {
+  order: 1;
+  margin-left: 3px;
+  margin-right: 3px;
+  color: var(--toolbar-link-color-hover);
+
+}
 
 /* utils
 ------------------------------------------------ */

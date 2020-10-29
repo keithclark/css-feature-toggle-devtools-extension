@@ -14,8 +14,9 @@ import presets from './preset-list.js';
 const optionsTemplate = document.getElementById('option');
 const optionGroupsTemplate = document.getElementById('optionGroup');
 const containerOptions = document.getElementById('optionsContainer');
-const presetsElem = document.getElementById('presets')
-
+const presetsElem = document.getElementById('presets');
+const settingsMenu = document.getElementById('settingsMenu');
+const showDescriptionsSettingElem = document.getElementById('showDescriptionsSetting');
 
 let paused = false;
 
@@ -226,6 +227,49 @@ const pause = () => {
 
 
 /**
+ * Toggle the settings menu on and off
+ */
+const toggleSettings = () => {
+  let visible = document.getElementById('settings').classList.toggle('button--active');
+  settingsMenu.hidden = !visible;
+};
+
+
+
+/**
+ * Load the panel settings from storage and set the UI state
+ */
+const loadSettings = () => {
+  chrome.storage.sync.get({
+    hideDescriptions: false
+  }, settings => {
+    showDescriptionsSettingElem.checked = !settings.hideDescriptions;
+    document.documentElement.classList.toggle('hide-descriptions', !showDescriptionsSettingElem.checked);
+  });
+}
+
+
+/**
+ * Persist the panel settings in storage
+ */
+const saveSettings = () => {
+  chrome.storage.sync.set({
+    hideDescriptions: !showDescriptionsSettingElem.checked
+  });
+}
+
+
+/**
+ * Toggle the description text below each feature to save space
+ */
+const toggleDescriptions = () => {
+  const isHidden = !showDescriptionsSettingElem.checked;
+  document.documentElement.classList.toggle('hide-descriptions', isHidden);
+  saveSettings();
+};
+
+
+/**
  * Event handler for `onResourceAdded`, which is dynamically bound when the user
  * sets/unsets any of the panel options
  *
@@ -256,6 +300,7 @@ const saveExtensionState = async() => {
  * Load the extension state from the top-level window and restore the UI.
  */
 const loadExtensionState = async() => {
+  loadSettings();
   let documents = await getDocuments();
   let state = await loadState('ui', documents[0]);
   if (!state) {
@@ -314,6 +359,9 @@ const init = () => {
   // Reset options button
   document.getElementById('pause').addEventListener('click', pause);
 
+  // Settings
+  document.getElementById('settings').addEventListener('click', toggleSettings);
+
 
   // Mimic the keyboard-only focus hilighting used in Chrome devtools
   document.addEventListener('keydown', e => {
@@ -331,6 +379,8 @@ const init = () => {
     saveExtensionState();
     updateInspectedWindow();
   });
+
+  showDescriptionsSettingElem.addEventListener('input', toggleDescriptions);
 
   loadExtensionState();
 

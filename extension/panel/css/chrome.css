@@ -3,12 +3,15 @@
 :root {
   --icon-pause: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cpath d='M10 1l4 4v4.9L10 14H5l-4-4V5l4-4h5zm0 9V5H8v5h2zm-3 0V5H5v5h2z' fill-rule='evenodd'/%3E%3C/svg%3E");
   --icon-reset: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cpath d='M7.5 1a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13zm0 11c.8 0 1.6-.3 2.3-.8L3.6 5.2a4.5 4.5 0 0 0 3.8 6.8zm4.4-4.6A4.5 4.5 0 0 0 5 3.6l6.3 6.2c.4-.7.6-1.5.6-2.4z'/%3E%3C/svg%3E");
+  --icon-settings: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cpath d='M8.4 0c.2 0 .4.1.4.3L9 2l1.2.7 1.8-.7c.1 0 .3 0 .4.2L14 4.7l-.1.5-1.6 1.1a5.3 5.3 0 010 1.4L14 8.8v.5l-1.4 2.4c0 .2-.3.2-.4.2l-1.8-.7-1.2.7-.3 1.8c0 .2-.2.3-.4.3H5.6a.3.3 0 01-.4-.3L5 12l-1.2-.7-1.8.7c-.1 0-.3 0-.4-.2L0 9.3l.1-.5 1.6-1.1a5.4 5.4 0 010-1.4L0 5.2a.3.3 0 010-.5l1.4-2.4c0-.2.3-.2.4-.2l1.8.7L5 2.1 5.2.3c0-.2.2-.3.4-.3zM7 4.5A2.5 2.5 0 004.5 7c0 1.4 1.1 2.4 2.5 2.4s2.5-1 2.5-2.4S8.4 4.5 7 4.5z' fill='%23000' fill-rule='nonzero'/%3E%3C/svg%3E");
   --icon-width: 18px;
   --icon-height: 16px;
   --icon-spacing: 6px 5px 4px 5px;
 
   --toolbar-spacing: 0 2px;
   --toolbar-item-gap: 0px;
+
+  --font: 12px/1.5 ".SFNSDisplay-Regular", "Helvetica Neue", "Lucida Grande", sans-serif;
 }
 
 
@@ -19,6 +22,10 @@
   --root-bg-color: #fff;
   --toolbar-bg-color: #f3f3f3;
   --toolbar-bg-color-hover: rgb(224, 224, 224);
+  --toolbar-divider-color: #ccc;
+  --toolbar-link-color: #5a5a5a
+  --toolbar-link-color-hover: #333;
+
   --divider-color: #d0d0d0;
 
   --toolbar-button-filter: invert(45%);
@@ -34,8 +41,13 @@
 :root.theme--dark {
   --root-fg-color: rgb(189, 198, 207);
   --root-bg-color: rgb(36, 36, 36);
-  --toolbar-bg-color: #333;
+  --toolbar-bg-color: rgb(41, 42, 45);
   --toolbar-bg-color-hover: rgb(67, 67, 67);
+  --toolbar-divider-color: rgb(61 61 61);
+  --toolbar-link-color: rgb(230 230 230);
+  --toolbar-link-color-hover: rgb(230 230 230);
+
+
   --divider-color: #525252;
 
   --toolbar-button-filter: invert(55%);
