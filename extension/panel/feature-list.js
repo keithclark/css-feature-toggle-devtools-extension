@@ -21,6 +21,7 @@ import scrollSnap from './features/scroll-snap.js';
 import conicGradient from './features/conic-gradient.js';
 import reducedMotion from './features/prefers-reduced-motion.js';
 import writingMode from './features/writing-mode.js';
+import aspectRatio from './features/aspect-ratio.js';
 
 export default [
   grid,
@@ -46,4 +47,5 @@ export default [
   conicGradient,
   reducedMotion,
   writingMode,
+  aspectRatio,
 ];
