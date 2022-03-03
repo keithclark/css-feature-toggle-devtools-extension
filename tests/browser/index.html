@@ -1,83 +1,93 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CSS Feature Toggle Test Page</title>
-<style>
-  body {
-    font: 85%/1.5 Arial;
-  }
-  h1 {
-    font-size: 175%;
-    margin: 0;
-  }
-  h2 {
-    font-size: 120%;
-    margin: 0;
-  }
-  h3 {
-    font-size: 100%;
-    margin: 0;
-  }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CSS Feature Toggle Test Page</title>
+  <style>
+    body {
+      font: 85%/1.5 Arial;
+    }
 
-  .testGroup__tests {
-    border:1px solid #ccc;
-    background: #eee;
-    padding: .25rem;
-    border-radius: 5px;
-  }
+    h1 {
+      font-size: 175%;
+      margin: 0;
+    }
 
-  .testGroup + .testGroup {
-    margin-top: 1em;
-  }
+    h2 {
+      font-size: 120%;
+      margin: 0;
+    }
 
-  .test {
-    display: table;
-  }
+    h3 {
+      font-size: 100%;
+      margin: 0;
+    }
 
-  .test__title, .test__output {
-    display: table-cell;
-    vertical-align: middle;
-  }
-  .test__title {
-    padding-left: .25em;
-  }
+    .testGroup__tests {
+      border: 1px solid #ccc;
+      background: #eee;
+      padding: .25rem;
+      border-radius: 5px;
+    }
 
-  .test__output {
-    padding: .25rem;
-    font-size: 0;
-  }
+    .testGroup+.testGroup {
+      margin-top: 1em;
+    }
 
-  .test__style {
-    white-space: pre;
-  }
+    .test {
+      display: table;
+    }
 
-  .test__indicator {
-    background: #d30;
-    width: 24px;
-    height: 24px;
-    overflow: hidden;
-  }
+    .test__title,
+    .test__output {
+      display: table-cell;
+      vertical-align: middle;
+    }
 
-  #compat-view:checked ~ .testGroup {
-    display: table;
-    width: 100%;
-  }
-  #compat-view:checked ~ .testGroup .testGroup__title {
-    display: table-cell;
-    vertical-align: middle;
-    width: 14em;
-  }
-  #compat-view:checked ~ .testGroup .testGroup__tests {
-    display: table-cell;
-    font-size: 0;
-  }
-  #compat-view:checked ~ .testGroup .test {
-    display: inline-block;
-  }
-</style>
+    .test__title {
+      padding-left: .25em;
+    }
+
+    .test__output {
+      padding: .25rem;
+      font-size: 0;
+    }
+
+    .test__style {
+      white-space: pre;
+    }
+
+    .test__indicator {
+      background: #d30;
+      width: 24px;
+      height: 24px;
+      overflow: hidden;
+    }
+
+    #compat-view:checked~.testGroup {
+      display: table;
+      width: 100%;
+    }
+
+    #compat-view:checked~.testGroup .testGroup__title {
+      display: table-cell;
+      vertical-align: middle;
+      width: 14em;
+    }
+
+    #compat-view:checked~.testGroup .testGroup__tests {
+      display: table-cell;
+      font-size: 0;
+    }
+
+    #compat-view:checked~.testGroup .test {
+      display: inline-block;
+    }
+  </style>
 </head>
+
 <body>
   <h1>Feature toggle tests</h1>
   <input id="compat-view" type="checkbox" checked>
@@ -121,5 +131,7 @@
   <script src="features/calc.js"></script>
   <script src="features/fonts.js"></script>
   <script src="features/writing-mode.js"></script>
+  <script src="features/aspect-ratio.js"></script>
 </body>
+
 </html>
